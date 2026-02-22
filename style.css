@@ -299,6 +299,12 @@
             gap: 20px;
         }
 
+        .side-news:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(0,100,255,0.2);
+            border-radius: 20px;
+        }
+
         .news-card {
             background: var(--bg-card);
             border-radius: 15px;
@@ -308,8 +314,7 @@
         }
 
         .news-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0,100,255,0.15);
+            transform: translateY(-5px);
         }
 
         .news-card img {
@@ -328,6 +333,10 @@
             gap: 0;
         }
 
+        .news-card.small:hover{
+            transform: translateY(-5px);
+        }
+        
         .news-card.small img {
             height: 100%;
             min-height: 150px;
@@ -339,6 +348,7 @@
             line-height: 1.4;
             margin-top: 8px;
         }
+
 
         /* Photos Section */
         .photos-grid {
