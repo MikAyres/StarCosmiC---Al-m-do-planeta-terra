@@ -90,6 +90,7 @@
         }
 
         .logo-icon::before {
+            content: '';
             font-size: 24px;
             color: white;
             position: relative;
@@ -97,6 +98,7 @@
         }
 
         .logo-icon::after {
+            content: '';
             position: absolute;
             width: 60%;
             height: 60%;

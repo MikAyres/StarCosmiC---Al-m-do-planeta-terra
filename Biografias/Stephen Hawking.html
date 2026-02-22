@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stephen Hawking - StarCosmiC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@200;300;400;500;600;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --bg-light: #0d3a5c;
+            --text-primary: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-gold: #d4af37;
+            --accent-blue: #4a90e2;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.7), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.4;
+            animation: twinkle 8s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 25, 40, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 124px;
+            height: 47px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .logo-icon::before {
+            content: '';
+            font-size: 24px;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+
+
+        .back-btn {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            transition: all 0.3s;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Article Header - COMPACTO */
+        .article-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .category-label {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--accent-gold);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            font-weight: 300;
+            font-style: italic;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Vital Stats - COMPACTO */
+        .vital-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0 0;
+            padding: 15px;
+            background: rgba(8, 38, 60, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px 5px;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            line-height: 1.4;
+        }
+
+        .stat-value.highlight {
+            color: var(--accent-gold);
+        }
+
+        /* Hero Image */
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            object-position: center top;
+            border-radius: 12px;
+            margin: 25px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Article Content */
+        .article-content {
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .article-content p {
+            margin-bottom: 22px;
+            text-align: justify;
+        }
+
+        .lead {
+            font-size: 19px;
+            line-height: 1.7;
+            color: white;
+            font-weight: 400;
+            border-left: 3px solid var(--accent-gold);
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+        }
+
+        /* Section Dividers */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            margin: 40px 0 30px;
+            gap: 15px;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            white-space: nowrap;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-gold), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 5px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .timeline-year {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            color: var(--accent-gold);
+            margin-bottom: 8px;
+        }
+
+        .timeline-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* Books Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .book-card {
+            background: rgba(8, 38, 60, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 18px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent-gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .book-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .book-year {
+            font-size: 10px;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .book-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .book-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: linear-gradient(135deg, rgba(8, 38, 60, 0.8), rgba(13, 58, 92, 0.4));
+            border-left: 3px solid var(--accent-gold);
+            padding: 25px;
+            margin: 35px 0;
+            border-radius: 0 12px 12px 0;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 60px;
+            color: rgba(212, 175, 55, 0.15);
+            font-family: 'Cinzel', serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 20px;
+            font-style: italic;
+            line-height: 1.5;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+        }
+
+        /* Legacy Section */
+        .legacy-box {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .legacy-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .legacy-title {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .legacy-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.9);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Footer */
+        .article-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background: rgba(8, 38, 60, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            max-width: 250px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(8, 38, 60, 0.8);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateX(5px);
+        }
+
+        .nav-btn.prev:hover {
+            transform: translateX(-5px);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        .nav-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #020d14, transparent);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 26px;
+            }
+            
+            .vital-stats {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            
+            .hero-image {
+                height: 250px;
+            }
+            
+            .article-content {
+                font-size: 16px;
+            }
+            
+            .quote-block {
+                padding: 20px;
+            }
+            
+            .quote-text {
+                font-size: 18px;
+            }
+            
+            .article-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                max-width: 100%;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="stars"></div>
+
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="/Images/Logo-StarCosmiC.jpeg" alt="Logo">
+                </div>
+            </a>
+            <a href="../index.html" class="back-btn">
+                ← Voltar
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <div class="bio-sticky">
+                <header class="article-header">
+                    <span class="category-label">Biografia</span>
+                    <h1>Stephen Hawking</h1>
+                    <p class="subtitle">"A mente mais brilhante confinada em um corpo aprisionado"</p>
+                    
+                    <div class="vital-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Nascimento</div>
+                            <div class="stat-value">8 Jan 1942<br><span style="font-size: 11px; opacity: 0.7;">Oxford, Inglaterra</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Falecimento</div>
+                            <div class="stat-value highlight">14 Mar 2018<br><span style="font-size: 11px; opacity: 0.7;">Cambridge, Inglaterra</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Legado</div>
+                            <div class="stat-value">76 anos<br><span style="font-size: 11px; opacity: 0.7;">de ciência</span></div>
+                        </div>
+                </div>
+            </header>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Stephen_Hawking.StarChild.jpg" alt="Stephen Hawking" class="hero-image">
+
+            <div class="article-content">
+                <p class="lead">
+                    Stephen Hawking foi um dos maiores físicos teóricos e cosmólogos do mundo, que apesar de ter uma doença degenerativa que o deixou paralisado e sem fala, produziu algumas das teorias mais importantes da física moderna sobre a origem e a natureza do universo.
+                </p>
+
+                <p>
+                    Hawking nasceu em Oxford, Inglaterra, no dia 8 de janeiro de 1942, exatamente 300 anos após a morte de Galileu Galilei. Seus pais eram ambos formados pela Universidade de Oxford, onde ele também estudou física. Desde criança, ele se interessava por ciência e astronomia, e era considerado uma criança precoce. Em 1962, ele ingressou na Universidade de Cambridge para fazer seu doutorado em cosmologia.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">A Luta Contra o Destino</span>
+                </div>
+
+                <p>
+                    Foi lá que ele começou a desenvolver os primeiros sintomas de uma doença neuromotora chamada esclerose lateral amiotrófica (ELA), que afeta os músculos e os nervos responsáveis pelo movimento voluntário. Os médicos lhe deram apenas alguns anos de vida, mas ele não desistiu de sua carreira científica.
+                </p>
+
+                <p>
+                    Em 1965, ele se casou com Jane Wilde, com quem teve três filhos: Robert, Lucy e Timothy. Ele também trabalhou no Instituto de Tecnologia da Califórnia, nos Estados Unidos, onde fez importantes descobertas sobre os buracos negros e a gravidade quântica.
+                </p>
+
+                <div class="timeline">
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1985</div>
+                        <div class="timeline-content">
+                            Contraiu uma pneumonia durante uma viagem à Suíça e teve que fazer uma traqueostomia, que o impediu de falar. Passou a usar um computador com voz eletrônica para se comunicar.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1988</div>
+                        <div class="timeline-content">
+                            Publicou <strong>"Uma Breve História do Tempo"</strong>, sucesso mundial traduzido para mais de 30 idiomas.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1995</div>
+                        <div class="timeline-content">
+                            Divorciou-se de Jane e casou-se com Elaine Mason. Em 2006, separaram-se e ele se reaproximou da família.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <span class="section-title">Obras Imortais</span>
+                </div>
+
+                <div class="books-grid">
+                    <div class="book-card fade-up">
+                        <div class="book-year">1988</div>
+                        <div class="book-title">Uma Breve História do Tempo</div>
+                        <div class="book-desc">Big Bang, buracos negros e mecânica quântica explicados para todos.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">1993</div>
+                        <div class="book-title">Buracos Negros, Universos Bebês</div>
+                        <div class="book-desc">Ensaios sobre cosmologia e reflexões filosóficas.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">2001</div>
+                        <div class="book-title">O Universo Numa Casca de Noz</div>
+                        <div class="book-desc">Explicação visual das teorias do universo.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">2002</div>
+                        <div class="book-title">A Teoria de Tudo</div>
+                        <div class="book-desc">A busca pela teoria unificada das forças.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">2010</div>
+                        <div class="book-title">O Grande Projeto</div>
+                        <div class="book-desc">A origem do universo sem a necessidade de Deus.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">2013</div>
+                        <div class="book-title">Minha Breve História</div>
+                        <div class="book-desc">Autobiografia íntima sobre vida e ciência.</div>
+                    </div>
+                </div>
+
+                <div class="quote-block fade-up">
+                    <p class="quote-text">
+                        A vida seria tragicamente tediosa se fosse eterna. A imortalidade seria um pesadelo.
+                    </p>
+                    <div class="quote-author">— Stephen Hawking</div>
+                </div>
+
+                <p>
+                    Hawking foi um dos maiores defensores da busca por vida inteligente no espaço e da exploração espacial. Ele também alertou sobre os perigos da inteligência artificial, das armas nucleares e das mudanças climáticas.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Honrarias</span>
+                </div>
+
+                <p>
+                    Recebeu a <strong>Medalha Albert Einstein</strong> (1979), <strong>Medalha Copley</strong> (2006) e <strong>Medalha Presidencial da Liberdade</strong> (2009). Foi membro da Royal Society e da Academia Pontifícia das Ciências.
+                </p>
+
+                <div class="legacy-box fade-up">
+                    <div class="legacy-icon">✦</div>
+                    <h3 class="legacy-title">Legado Eterno</h3>
+                    <p class="legacy-text">
+                        Hawking morreu em 14 de março de 2018, aos 76 anos. Deixou um legado inestimável para a ciência, provando que a mente humana pode transcender as limitações do corpo.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <nav class="article-nav">
+            <a href="#" class="nav-btn prev">
+                <div>
+                    <div class="nav-label">← Anterior</div>
+                    <div class="nav-title">Isaac Newton</div>
+                </div>
+            </a>
+            <a href="#" class="nav-btn next">
+                <div style="text-align: right;">
+                    <div class="nav-label">Próximo →</div>
+                    <div class="nav-title">Carl Sagan</div>
+                </div>
+            </a>
+        </nav>
+    </main>
+
+    <footer>
+        <p class="footer-text">StarCosmiC © 2026 - Além do Planeta Terra</p>
+    </footer>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
