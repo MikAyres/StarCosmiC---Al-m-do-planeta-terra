@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StarCosmiC - Além do Planeta Terra</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@200;300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars-bg"></div>
+    
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <img src="/Images/Logo-StarCosmiC.jpeg" alt="Logo">
+                </div>
+    
+            </a>
+            
+            <nav>
+                <button class="nav-btn">Cosmologia</button>
+                <button class="nav-btn">Sistema Solar</button>
+                <button class="nav-btn">Estrelas</button>
+                <button class="nav-btn">Galáxias</button>
+                <button class="nav-btn">Teorias</button>
+                <button class="nav-btn">Planetas</button>
+                <button class="nav-btn">Exploração</button>
+            </nav>
+            
+            <div class="search-container">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Pesquisar">
+                </div>
+                <div class="user-avatar">M</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Últimas Notícias -->
+        <div class="section-header">
+            <h2 class="section-title">Últimas Notícias</h2>
+            <a href="#" class="view-all">Ver tudo ></a>
+        </div>
+        
+        <div class="news-grid fade-in">
+            <article class="featured-news">
+                <img src="/Images/Exoplaneta.png" alt="Exoplaneta">
+                <div class="featured-content">
+                    <span class="category-tag">Estrelas</span>
+                    <h3 class="featured-title">Explore as 10 estrelas mais próximas do nosso Sistema Solar</h3>
+                </div>
+            </article>
+            
+            <div class="side-news">
+                <article class="news-card">
+                    <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&q=80" alt="James Webb">
+                    <div class="news-card-content">
+                        <span class="category-tag">Cosmologia</span>
+                        <h3 class="news-card-title">Como o telescópio James Webb está mudando a astronomia</h3>
+                    </div>
+                </article>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <article class="news-card small">
+                        <img src="/Images/Exploração Espacial.jpg" alt="Exploração">
+                        <div class="news-card-content">
+                            <span class="category-tag">Exploração Espacial</span>
+                            <h3 class="news-card-title" style="font-size: 16px;">Módulo japonês perde contato momentos antes do pouso</h3>
+                        </div>
+                    </article>
+                    
+                    <article class="news-card small">
+                        <img src="/Images/exoplaneta-agua.webp" alt="Exoplanetas">
+                        <div class="news-card-content">
+                            <span class="category-tag">Planetas</span>
+                            <h3 class="news-card-title" style="font-size: 16px;">Como observar exoplanetas do seu quintal</h3>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fotos Astronômicas -->
+        <div class="section-header">
+            <h2 class="section-title">Fotos Astronômicas</h2>
+            <a href="#" class="view-all">Ver todas ></a>
+        </div>
+        
+        <div class="photos-grid fade-in">
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=800&q=80" alt="SMACS 0723">
+                <div class="photo-caption">
+                    <p>O rico aglomerado de galáxias SMACS 0723 aparece nesta imagem composta, obtida pelo James Webb ao longo de 12,5 horas. É a visão infravermelha mais profunda já alcançada desta pequena região do universo.</p>
+                    <a href="#" class="photo-link">clique aqui para saber mais</a>
+                    <p style="margin-top: 10px; font-size: 13px; opacity: 0.7;"><strong>NASA, ESA, CSA e STScI</strong></p>
+                </div>
+            </div>
+            
+            <div class="photo-card">
+                <img src="https://images.unsplash.com/photo-1545156521-77bd85671d30?w=800&q=80" alt="Pilares da Criação">
+                <div class="photo-caption">
+                    <p>O Telescópio Espacial James Webb capturou uma imagem altamente detalhada dos Pilares da Criação, uma estrutura astronômica formada por nuvens de gás e poeira a 6,5 mil anos-luz de distância da Terra.</p>
+                    <a href="#" class="photo-link">clique aqui para saber mais</a>
+                    <p style="margin-top: 10px; font-size: 13px; opacity: 0.7;"><strong>NASA, ESA, CSA e STScI</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cientistas -->
+        <div class="section-header">
+            <h2 class="section-title">Principais Cientistas, Astrônomos, Cosmólogos e Físicos</h2>
+            <a href="#" class="view-all">Ver todos ></a>
+        </div>
+        
+        <div class="scientists-section fade-in">
+            <article class="scientist-card">
+                <div class="scientist-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Stephen_Hawking.StarChild.jpg" alt="Stephen Hawking">
+                </div>
+                <div class="scientist-info">
+                    <h3 class="scientist-name">Stephen Hawking</h3>
+                    <p class="scientist-bio">
+                        Foi um professor lucasiano por trinta anos na Universidade de Cambridge - uma das mais prestigiosas cátedras de matemática do mundo, já ocupada por Isaac Newton -, exerceu o cargo de diretor de pesquisa do Departamento de Matemática Aplicada e Física Teórica e fundou o Centro de Cosmologia Teórica da Instituição. Considerado um dos físicos mais importantes da história, recebeu inúmeros prêmios e honrarias, incluindo a Medalha Presidencial da Liberdade, a maior condecoração civil dos Estados Unidos. Além de "Uma Breve História do Tempo", seus livros para o público geral são: O universo numa casca de noz, Buracos negros e a autobiografia Minha breve história. Hawking morreu em 2018, aos 76 anos, em Cambridge.
+                    </p>
+                    <a href="#" class="scientist-link">clique aqui para saber mais</a>
+                </div>
+            </article>
+            
+            <article class="scientist-card">
+                <div class="scientist-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/be/Carl_Sagan_Planetary_Society.JPG" alt="Carl Sagan">
+                </div>
+                <div class="scientist-info">
+                    <h3 class="scientist-name">Carl Sagan</h3>
+                    <p class="scientist-bio">
+                        Carl Edward Sagan foi um cientista planetário, astrônomo, astrobiólogo, astrofísico, escritor, divulgador científico e ativista norte-americano. Foi durante a vida um grande defensor do ceticismo e do uso do método científico. Promoveu a busca por inteligência extraterrestre através do projeto SETI e instituiu o envio de mensagens a bordo de sondas espaciais, destinadas a informar possíveis civilizações extraterrestres sobre a existência humana. Sagan é conhecido por seus livros de divulgação científica e pela premiada série televisiva de 1980 Cosmos: Uma Viagem Pessoal, que ele mesmo narrou e coescreveu.
+                    </p>
+                    <a href="#" class="scientist-link">clique aqui para saber mais</a>
+                </div>
+            </article>
+            
+            <article class="scientist-card">
+                <div class="scientist-image">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Tyson_-_Apollo_40th_anniversary_2009.jpg" alt="Neil deGrasse Tyson">
+                </div>
+                <div class="scientist-info">
+                    <h3 class="scientist-name">Neil deGrasse Tyson</h3>
+                    <p class="scientist-bio">
+                        Tyson investiga formação e evolução estelar, como também cosmologia e astronomia. Já ocupou vários cargos em instituições como a Universidade de Maryland, Universidade de Princeton, o Museu Americano de História Natural e o Planetário Hayden. É autor de vários livros sobre astronomia como "Astrofísica para apressados", "Morte no buraco negro", "Origens" entre outras obras. Já escreveu e divulgou amplamente os seus pontos de vista sobre a religião, espiritualidade e a espiritualidade da ciência, incluindo as dissertações The Perimeter of Ignorance e Holy Wars que apareceram na revista Natural History e no workshop Beyond Belief de 2006. Tyson colaborou com o biólogo evolucionista em palestras sobre religião e ciência.
+                    </p>
+                    <a href="#" class="scientist-link">clique aqui para saber mais</a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                Star
+                <span>CosmiC</span>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#">Sobre nós</a>
+                <a href="#">Contato</a>
+                <a href="#">Termos de uso</a>
+                <a href="#">Política de privacidade</a>
+                <a href="#">Política de Copyright</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animação suave ao rolar
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.scientist-card, .photo-card, .news-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Efeito de brilho no header ao rolar
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.style.boxShadow = '0 4px 30px rgba(0,100,255,0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+            
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>
