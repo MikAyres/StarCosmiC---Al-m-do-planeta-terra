@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo ao StarCosmiC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --accent-gold: #d4af37;
+            --text-muted: rgba(255, 255, 255, 0.6);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background animado */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.4;
+            animation: twinkle 10s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .nebula {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.15), transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(120, 219, 255, 0.1), transparent 50%);
+            animation: rotate 100s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Container principal */
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        /* Logo */
+        .logo-section {
+            margin-bottom: 40px;
+        }
+
+        .icon-login {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 3px solid rgba(255,255,255,0.2);
+            box-shadow: 0 10px 40px rgba(0,100,255,0.3);
+            position: relative;
+        }
+
+        
+        .logo-icon::before {
+            font-size: 40px;
+            color: white;
+        }
+
+        .logo-icon::after {
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            color: white;
+            letter-spacing: 4px;
+            text-shadow: 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 10px;
+            letter-spacing: 2px;
+        }
+
+        /* Card de login */
+        .login-card {
+            background: rgba(8, 38, 60, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .description {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Formulário */
+        .form-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 18px 20px;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input[type="email"]::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        input[type="email"]:focus {
+            border-color: var(--accent-gold);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Botão */
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            border: none;
+            border-radius: 12px;
+            color: #051928;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        /* Benefícios */
+        .benefits {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+
+        .benefit-icon {
+            width: 24px;
+            height: 24px;
+            background: rgba(212, 175, 55, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        /* Link para entrar sem cadastrar */
+        .skip-link {
+            margin-top: 25px;
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+        }
+
+        .skip-link a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .skip-link a:hover {
+            color: white;
+        }
+
+        /* Mensagem de sucesso (escondida por padrão) */
+        .success-message {
+            display: none;
+            padding: 30px;
+        }
+
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .success-message h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .success-message p {
+            color: rgba(255,255,255,0.8);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Responsivo */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .login-card {
+                padding: 30px 25px;
+            }
+            
+            .logo-text {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nebula"></div>
+    <div class="stars"></div>
+
+    <div class="container">
+        <div class="logo-section">
+            <div class="logo-icon">
+                <a href="../index.html"><img src="/Images/Icone-login.png" alt="Icone-login" class="icon-login"></a>
+            </div>
+            <h1 class="logo-text">STARCOSMIC</h1>
+            <p class="tagline">ALÉM DO PLANETA TERRA</p>
+        </div>
+
+        <div class="login-card">
+            <!-- Formulário -->
+            <div id="form-section">
+                <h2>Embarque na Jornada</h2>
+                <p class="description">
+                    Receba as últimas descobertas do universo, fotos exclusivas da NASA e biografias de grandes cientistas diretamente no seu email.
+                </p>
+
+                <form id="subscribe-form">
+                    <div class="form-group">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            placeholder="Seu melhor email" 
+                            required
+                            autocomplete="email"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn-submit">
+                        Explorar o Universo →
+                    </button>
+                </form>
+
+                <div class="benefits">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <span>Novos posts toda semana</span>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <span>Imagens exclusivas do James Webb</span>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✓</div>
+                        <span>Biografias de cientistas lendários</span>
+                    </div>
+                </div>
+
+                <div class="skip-link">
+                    ou <a href="../index.html">entrar sem cadastrar →</a>
+                </div>
+            </div>
+
+            <!-- Mensagem de sucesso -->
+            <div id="success-section" class="success-message">
+                <div class="success-icon">🚀</div>
+                <h3>Bem-vindo a bordo!</h3>
+                <p>
+                    Você agora faz parte da tripulação StarCosmiC. 
+                    Prepare-se para receber as maravilhas do universo no seu email!
+                </p>
+                <br>
+                <a href="../index.html" class="btn-submit" style="display: inline-block; text-decoration: none; margin-top: 20px;">
+                    Ir para o Site →
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('subscribe-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            
+            // Aqui você pode adicionar o código para salvar o email
+            // Por enquanto, só mostra a mensagem de sucesso
+            console.log('Email cadastrado:', email);
+            
+            // Esconde formulário, mostra sucesso
+            document.getElementById('form-section').style.display = 'none';
+            document.getElementById('success-section').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
