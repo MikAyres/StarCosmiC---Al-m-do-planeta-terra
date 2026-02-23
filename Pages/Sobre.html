@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre o StarCosmiC - Nossa Missão</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --bg-elevated: #0d3a5c;
+            --accent-gold: #d4af37;
+            --accent-cyan: #4a9eff;
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --border-subtle: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Background */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 30% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 80%, rgba(74, 158, 255, 0.05) 0%, transparent 50%);
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 100px 100px;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 25, 40, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 12px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 124px;  /* Desktop */
+            height: 47px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.2);
+            
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            display: block;
+        }
+
+        .logo-text {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: white;
+            letter-spacing: 2px;
+        }
+
+        .back-btn {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            color: white;
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Main */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 30px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 60px;
+        }
+
+        .hero-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent-gold);
+            margin-bottom: 30px;
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 52px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #fff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-family: 'Crimson Text', serif;
+            font-size: 22px;
+            color: var(--text-secondary);
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Content Sections */
+        .content-section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border-subtle));
+        }
+
+        .section-line.right {
+            background: linear-gradient(to left, transparent, var(--border-subtle));
+        }
+
+        .section-number {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            color: var(--accent-gold);
+            letter-spacing: 3px;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            font-weight: 400;
+            color: white;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .lead-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 21px;
+            line-height: 1.9;
+            color: var(--text-secondary);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .body-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            line-height: 2;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            text-align: justify;
+        }
+
+        .body-text strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(8, 38, 60, 0.8));
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--accent-gold), transparent);
+        }
+
+        .highlight-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 20px;
+            line-height: 1.8;
+            color: white;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Agencies Grid */
+        .agencies-section {
+            margin: 60px 0;
+        }
+
+        .agencies-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .agency-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .agency-card:hover {
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+            background: var(--bg-elevated);
+        }
+
+        .agency-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .agency-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .agency-full {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 60px 0;
+            padding: 40px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .stat-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 40px;
+            width: 1px;
+            background: var(--border-subtle);
+        }
+
+        .stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 42px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            padding: 80px 0;
+            border-top: 1px solid var(--border-subtle);
+            margin-top: 60px;
+        }
+
+        .cta-title {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .cta-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, var(--accent-gold), #f4d03f);
+            color: #051928;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Update Badge */
+        .update-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: rgba(74, 158, 255, 0.1);
+            border: 1px solid rgba(74, 158, 255, 0.3);
+            border-radius: 30px;
+            font-size: 13px;
+            color: var(--accent-cyan);
+            margin-top: 40px;
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #020d14, transparent);
+            border-top: 1px solid var(--border-subtle);
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            
+            .agencies-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats-bar {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .stat-item:not(:last-child)::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="grid-overlay"></div>
+
+       <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="Images/Logo-StarCosmiC.jpeg" alt="Logo">
+                </div>
+            </a>
+            <a href="../index.html" class="back-btn">
+                ← Voltar
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <span class="hero-label">Manifesto</span>
+            <h1>O que é o<br>StarCosmiC?</h1>
+            <p class="hero-subtitle">
+                Um espaço de conhecimento rigoroso sobre as Ciências Espaciais, 
+                construído para quem busca compreender o universo sem renunciar à elegância da divulgação.
+            </p>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <div class="section-line"></div>
+                <span class="section-number">I</span>
+                <div class="section-line right"></div>
+            </div>
+
+            <p class="lead-text">
+                O <strong>StarCosmiC (SCC)</strong> é um website informativo voltado para as 
+                <strong>Ciências Espaciais</strong> — astronomia, astrofísica, cosmologia, 
+                física espacial, planetologia e áreas correlatas.
+            </p>
+
+            <p class="body-text">
+                Este projeto foi planejado especialmente para aquelas pessoas que têm interesse 
+                em conhecer ou se atualizar sobre esses assuntos. O website foi pensado de forma 
+                que o conteúdo transmitido não seja maçante ao ponto de gerar desinteresse. 
+                Por mais que seja um ambiente formal, é sempre importante deixar o público confortável, 
+                e o SCC preza muito por isso.
+            </p>
+
+            <div class="highlight-box">
+                <p class="highlight-text">
+                    "A elegância na apresentação do conhecimento científico não diminui sua rigorosidade — 
+                    pelo contrário, amplia seu alcance."
+                </p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <div class="section-line"></div>
+                <span class="section-number">II</span>
+                <div class="section-line right"></div>
+            </div>
+
+            <h2>Compromisso com a Verdade</h2>
+
+            <p class="body-text">
+                O StarCosmiC é um espaço de acesso ao conhecimento <strong>100% confiável</strong>. 
+                Todo o conteúdo disponibilizado aos visitantes é obtido exclusivamente de 
+                <strong>fontes verificadas por agências governamentais</strong> e instituições 
+                científicas de referência mundial.
+            </p>
+
+            <div class="agencies-section">
+                <div class="agencies-grid">
+                    <div class="agency-card">
+                        <div class="agency-icon">🚀</div>
+                        <div class="agency-name">NASA</div>
+                        <div class="agency-full">National Aeronautics and Space Administration</div>
+                    </div>
+                    <div class="agency-card">
+                        <div class="agency-icon">🛰️</div>
+                        <div class="agency-name">ESA</div>
+                        <div class="agency-full">European Space Agency</div>
+                    </div>
+                    <div class="agency-card">
+                        <div class="agency-icon">🌏</div>
+                        <div class="agency-name">JAXA</div>
+                        <div class="agency-full">Japan Aerospace Exploration Agency</div>
+                    </div>
+                    <div class="agency-card">
+                        <div class="agency-icon">🛸</div>
+                        <div class="agency-name">ISRO</div>
+                        <div class="agency-full">Indian Space Research Organisation</div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="body-text" style="text-align: center; margin-top: 40px;">
+                Entre outras instituições parceiras no fornecimento de dados astronômicos, 
+                astrofísicos e de engenharia espacial.
+            </p>
+        </section>
+
+        <section class="content-section">
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Fontes Verificadas</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5+</span>
+                    <span class="stat-label">Agências Parceiras</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">∞</span>
+                    <span class="stat-label">Curiosidade</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h3 class="cta-title">Embarque na Jornada</h3>
+            <p class="cta-text">
+                Se você é uma pessoa que tem interesse ou curiosidade sobre como o Setor Espacial funciona, 
+                faça o login e venha conhecer nossos trabalhos.
+            </p>
+            <a href="login.html" class="cta-button">Explorar o Universo</a>
+
+            <div class="update-badge">
+                <span class="pulse"></span>
+                Atualização do conteúdo toda semana
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p class="footer-text">StarCosmiC © 2026 — Ciência rigorosa, apresentação elegante</p>
+    </footer>
+</body>
+</html>

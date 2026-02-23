@@ -71,44 +71,43 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
             text-decoration: none;
             flex-shrink: 0;
         }
 
         .logo-icon {
-            width: 124px;
+            width: 124px;  /* Desktop */
             height: 47px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            border-radius: 12px;
+            border-radius: 10px;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow: hidden;
             border: 2px solid rgba(255,255,255,0.2);
+            /* REMOVIDO: background, ::before, ::after (não precisa com imagem) */
         }
 
-        .logo-icon::before {
-            content: '';
-            font-size: 24px;
-            color: white;
-            position: relative;
-            z-index: 2;
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;  /* ou 'contain' se quiser ver a logo toda */
+            display: block;
         }
 
-        .logo-icon::after {
-            content: '';
-            position: absolute;
-            width: 60%;
-            height: 60%;
-            border: 2px solid rgba(255,255,255,0.4);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        /* MOBILE - Logo menor */
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 47px;   /* Quadrado, só o ícone */
+                height: 47px;
+            }
+            
+            /* Se quiser esconder completamente no mobile muito pequeno: */
+            /*
+            .logo {
+                display: none;
+            }
+            */
         }
-
         .icon-login {
             width: 45px;
             height: 45px;
@@ -651,3 +650,68 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* BOTÃO HAMBÚRGUER */
+.menu-toggle {
+    display: none; /* Escondido no desktop */
+    width: 40px;
+    height: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.menu-toggle:hover {
+    background: var(--bg-elevated);
+    border-color: rgba(255,255,255,0.3);
+}
+
+/* MENU MOBILE (escondido por padrão) */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background: rgba(5, 25, 40, 0.98);
+    border-top: 1px solid var(--border-subtle);
+}
+
+.mobile-menu.active {
+    display: flex;
+}
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex; /* Mostra no mobile */
+    }
+    
+    nav {
+        display: none; /* Esconde menu desktop no mobile */
+    }
+    
+    .search-box {
+        min-width: 120px;
+        padding: 8px 12px;
+    }
+    
+    .search-box input {
+        width: 80px;
+    }
+    
+    .logo-text {
+        font-size: 18px; /* Reduz um pouco */
+    }
+}
+
+@media (min-width: 769px) {
+    .mobile-menu {
+        display: none !important; /* Sempre escondido no desktop */
+    }
+}
