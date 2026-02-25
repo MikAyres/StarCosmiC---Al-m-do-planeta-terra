@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vizinhança Estelar - StarCosmiC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@200;300;400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --bg-elevated: #0d3a5c;
+            --accent-gold: #d4af37;
+            --accent-cyan: #4a9eff;
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --border-subtle: rgba(255, 255, 255, 0.1);
+            --bg-search: #2E4C62;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, rgba(74, 158, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+        }
+
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                radial-gradient(1px 1px at 25px 35px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 50px 75px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1.5px 1.5px at 100px 50px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 150px 90px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1.5px 1.5px at 200px 120px, rgba(255,255,255,0.9), transparent);
+            background-repeat: repeat;
+            background-size: 250px 250px;
+            opacity: 0.4;
+        }
+
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 25, 40, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 15px 0;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 200px;
+            height: 47px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.2);
+            position: relative; /* Já tem isso, importante! */
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute; /* Uma sobre a outra */
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease; /* Suaviza a troca */
+        }
+
+        /* Desktop: mostra logo completa, esconde ícone */
+        .logo-desktop { 
+            opacity: 1;
+            z-index: 2;
+        }
+        .logo-mobile { 
+            opacity: 0;
+            z-index: 1;
+        }
+
+        /* Mobile: mostra ícone, esconde logo completa */
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 47px;
+                height: 47px;
+            }
+            
+            .logo-desktop { 
+                opacity: 0;
+            }
+            .logo-mobile { 
+                opacity: 1;
+            }
+        }
+
+        .icon-login {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: var(--bg-card);
+            border: 1px solid rgba(0,0,0,0.5);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: capitalize;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            background: #0d3a5c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,150,255,0.3);
+        }
+
+        /* Search Box */
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-box {
+            background: var(--bg-search);
+            border: 1px solid rgba(0,0,0,0.5);
+            border-radius: 10px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            width: 100%;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .search-icon {
+            font-size: 18px;
+            opacity: 0.7;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #0000005e 0%, #0000008e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .back-btn {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            color: white;
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Main */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 60px;
+        }
+
+        .hero-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-family: 'Crimson Text', serif;
+            font-size: 20px;
+            color: var(--text-secondary);
+            font-style: italic;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-size: 36px;
+            font-weight: 300;
+            color: var(--accent-cyan);
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Intro Section */
+        .intro {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 80px;
+            padding: 40px 0;
+        }
+
+        .intro-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            line-height: 1.9;
+            color: var(--text-secondary);
+        }
+
+        .intro-text p {
+            margin-bottom: 20px;
+        }
+
+        .intro-text strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        .data-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .panel-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 14px;
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            color: var(--text-muted);
+        }
+
+        .data-value {
+            color: white;
+            font-weight: 500;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Map Section */
+        .map-section {
+            margin-bottom: 80px;
+        }
+
+        .map-section:hover {
+            transform:translateY(-8px);
+            box-shadow: 0 10px 40px rgba(0,100,255,0.2);
+            border-radius: 20px;
+            height: 100%;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .section-header::before {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border-subtle));
+        }
+
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to left, transparent, var(--border-subtle));
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            white-space: nowrap;
+        }
+
+        .map-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-3d {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .space-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(60deg);
+            transform-style: preserve-3d;
+        }
+
+        .sun-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #ffd700 0%, #ff8c00 50%, transparent 70%);
+            border-radius: 50%;
+            box-shadow: 0 0 60px #ff8c00, 0 0 100px rgba(255,140,0,0.5);
+            z-index: 10;
+        }
+
+        .sun-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 30px);
+            font-size: 11px;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            white-space: nowrap;
+        }
+
+        .star-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255,255,255,0.8);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .star-point:hover {
+            transform: scale(1.5);
+            box-shadow: 0 0 30px var(--accent-cyan);
+        }
+
+        .star-point::after {
+            content: attr(data-name);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 10px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .star-point:hover::after {
+            opacity: 1;
+        }
+
+        /* Posições aproximadas no mapa */
+        .star-point.proxima { top: 30%; left: 70%; }
+        .star-point.alpha-a { top: 35%; left: 75%; }
+        .star-point.alpha-b { top: 40%; left: 72%; }
+        .star-point.barnard { top: 20%; left: 30%; }
+        .star-point.luhman { top: 60%; left: 25%; }
+        .star-point.wise { top: 75%; left: 40%; }
+        .star-point.sirius { top: 15%; left: 80%; }
+        .star-point.ross { top: 85%; left: 60%; }
+
+        .distance-rings {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .ring-2ly { width: 150px; height: 150px; }
+        .ring-4ly { width: 300px; height: 300px; }
+        .ring-6ly { width: 450px; height: 450px; }
+        .ring-8ly { width: 600px; height: 600px; }
+
+        .ring-label {
+            position: absolute;
+            font-size: 10px;
+            color: var(--text-muted);
+            right: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Stars List */
+        .stars-list {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .star-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .star-card:hover {
+            border-color: rgba(255,255,255,0.2);
+            transform: translateX(10px);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.3);
+        }
+
+        .star-card.featured {
+            border-color: var(--accent-gold);
+            background: linear-gradient(135deg, rgba(212,175,55,0.05), var(--bg-card));
+        }
+
+        .star-header {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            align-items: center;
+            gap: 30px;
+            padding: 30px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .star-rank {
+            font-family: 'Cinzel', serif;
+            font-size: 48px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            opacity: 0.3;
+            line-height: 1;
+        }
+
+        .star-card.featured .star-rank {
+            opacity: 1;
+        }
+
+        .star-info h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .star-type {
+            font-size: 13px;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .star-distance {
+            text-align: right;
+        }
+
+        .distance-value {
+            font-size: 32px;
+            font-weight: 300;
+            color: white;
+            display: block;
+        }
+
+        .distance-unit {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .star-body {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+            padding: 30px;
+        }
+
+        .star-description {
+            font-family: 'Crimson Text', serif;
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .star-description p {
+            margin-bottom: 15px;
+        }
+
+        .star-data {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .data-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 13px;
+        }
+
+        .data-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-item-label {
+            color: var(--text-muted);
+        }
+
+        .data-item-value {
+            color: white;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #020d14, transparent);
+            border-top: 1px solid var(--border-subtle);
+            padding: 40px 30px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .intro {
+                grid-template-columns: 1fr;
+            }
+            
+            .star-header {
+                grid-template-columns: 60px 1fr;
+            }
+            
+            .star-distance {
+                display: none;
+            }
+            
+            .star-body {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="starfield"></div>
+
+    <header>
+        <div class="header-container">
+            <!-- Logo -->
+        <a href="../index.html" class="logo">
+            <div class="logo-icon">
+                <!-- Desktop: logo completa -->
+                <img src="Images/Logo-StarCosmiC.png" alt="StarCosmiC">
+                <!-- Mobile: só o ícone -->
+                <img src="Images/LogoMobile.png" alt="StarCosmiC" class="logo-mobile">
+            </div>
+        </a>
+            <a href="../index.html" class="back-btn">
+                ← Voltar
+            </a>
+        </div>
+    </header>
+
+
+    <main>
+        <section class="hero">
+            <span class="hero-label">Catálogo Astronômico</span>
+            <h1>Vizinhança Estelar</h1>
+            <p class="hero-subtitle">
+                As dez estrelas mais próximas do Sol, representando nossos vizinhos cósmicos imediatos 
+                em uma escala de distâncias que desafia a compreensão humana.
+            </p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-value">4.3</span>
+                    <span class="hero-stat-label">Anos-luz até Alpha Centauri</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value">9.7</span>
+                    <span class="hero-stat-label">Anos-luz até a 10ª estrela</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value">270.000</span>
+                    <span class="hero-stat-label">Anos-luz de diâmetro da Via Láctea</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="intro">
+            <div class="intro-text">
+                <p>
+                    O conceito de <strong>ano-luz</strong> — a distância que a luz percorre em um ano, 
+                    aproximadamente 9,46 trilhões de quilômetros — torna-se essencial para compreender 
+                    a escala de nossa vizinhança estelar. Mesmo a estrela mais próxima, Proxima Centauri, 
+                    está tão distante que sua luz leva mais de quatro anos para nos alcançar.
+                </p>
+                <p>
+                    Este catálogo apresenta os dez objetos estelares mais próximos do Sol, incluindo 
+                    sistemas binários e múltiplos, anãs marrons e estrelas de sequência principal. 
+                    Cada entrada contém dados astrométricos precisos, classificações espectrais e 
+                    contexto astrofísico relevante.
+                </p>
+            </div>
+            
+            <div class="data-panel">
+                <div class="panel-title">Parâmetros do Sistema</div>
+                <div class="data-row">
+                    <span class="data-label">Referência Central</span>
+                    <span class="data-value">Sol (G2V)</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">Raio da Esfera</span>
+                    <span class="data-value">9.7 anos-luz</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">Objetos Catalogados</span>
+                    <span class="data-value">10 estrelas / 12 corpos</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">Sistemas Binários</span>
+                    <span class="data-value">Alpha Centauri, Sirius, Luhman 16</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">Anãs Marrons</span>
+                    <span class="data-value">2 objetos</span>
+                </div>
+                <div class="data-row">
+                    <span class="data-label">Visíveis a Olho Nu</span>
+                    <span class="data-value">Alpha Centauri, Sirius</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="map-section">
+            <div class="section-header">
+                <span class="section-title">Distribuição Espacial</span>
+            </div>
+            
+            <div class="map-container">
+                <div class="map-3d">
+                    <div class="space-grid"></div>
+                    
+                    <div class="distance-rings ring-2ly"><span class="ring-label">2 ly</span></div>
+                    <div class="distance-rings ring-4ly"><span class="ring-label">4 ly</span></div>
+                    <div class="distance-rings ring-6ly"><span class="ring-label">6 ly</span></div>
+                    <div class="distance-rings ring-8ly"><span class="ring-label">8 ly</span></div>
+                    
+                    <div class="sun-center"></div>
+                    <div class="sun-label">Sol</div>
+                    
+                    <div class="star-point proxima" data-name="Proxima"></div>
+                    <div class="star-point alpha-a" data-name="α Centauri A"></div>
+                    <div class="star-point alpha-b" data-name="α Centauri B"></div>
+                    <div class="star-point barnard" data-name="Barnard"></div>
+                    <div class="star-point luhman" data-name="Luhman 16"></div>
+                    <div class="star-point wise" data-name="WISE 0855"></div>
+                    <div class="star-point sirius" data-name="Sirius"></div>
+                    <div class="star-point ross" data-name="Ross 154"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stars-list">
+            <!-- Sol (Referência) -->
+            <article class="star-card featured">
+                <div class="star-header">
+                    <div class="star-rank">0</div>
+                    <div class="star-info">
+                        <h3>Sol</h3>
+                        <span class="star-type">Estrela Anã Amarela • G2V</span>
+                    </div>
+                    <div class="star-distance">
+                        <span class="distance-value">0.00</span>
+                        <span class="distance-unit">anos-luz</span>
+                    </div>
+                </div>
+                <div class="star-body">
+                    <div class="star-description">
+                        <p>
+                            Nossa estrela natal, responsável por 99,86% da massa total do Sistema Solar. 
+                            Com diâmetro de 1.392.700 km e temperatura efetiva de 5.778 K, o Sol serve 
+                            como ponto de referência para todas as medições astronômicas de distância estelar.
+                        </p>
+                        <p>
+                            A energia solar sustenta toda a vida terrestre e determina a estrutura 
+                            gravitacional de nosso sistema planetário. Sua posição na sequência principal 
+                            indica uma idade de aproximadamente 4,6 bilhões de anos, com expectativa 
+                            de vida remanescente de 5 bilhões de anos.
+                        </p>
+                    </div>
+                    <div class="star-data">
+                        <div class="data-title">Dados Astrométricos</div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Aparente</span>
+                            <span class="data-item-value">-26.74</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Absoluta</span>
+                            <span class="data-item-value">+4.83</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Massa</span>
+                            <span class="data-item-value">1.00 M☉</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Luminosidade</span>
+                            <span class="data-item-value">1.00 L☉</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Proxima Centauri -->
+            <article class="star-card">
+                <div class="star-header">
+                    <div class="star-rank">1</div>
+                    <div class="star-info">
+                        <h3>Proxima Centauri</h3>
+                        <span class="star-type">Anã Vermelha • M5.5Ve</span>
+                    </div>
+                    <div class="star-distance">
+                        <span class="distance-value">4.24</span>
+                        <span class="distance-unit">anos-luz</span>
+                    </div>
+                </div>
+                <div class="star-body">
+                    <div class="star-description">
+                        <p>
+                            A estrela mais próxima do Sol, descoberta em 1915 por Robert Innes. 
+                            Apesar da proximidade, sua magnitude aparente de +11.05 a torna 
+                            invisível a olho nu. Orbita o par Alpha Centauri com período de 
+                            aproximadamente 550.000 anos.
+                        </p>
+                        <p>
+                            Em 2016, foi confirmada a existência de Proxima Centauri b, exoplaneta 
+                            na zona habitável com massa mínima de 1,17 massas terrestres. A atividade 
+                            flare intensa da estrela, entretanto, representa desafios para a 
+                            habitabilidade potencial.
+                        </p>
+                    </div>
+                    <div class="star-data">
+                        <div class="data-title">Dados Astrométricos</div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Aparente</span>
+                            <span class="data-item-value">+11.05</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Absoluta</span>
+                            <span class="data-item-value">+15.53</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Massa</span>
+                            <span class="data-item-value">0.122 M☉</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Temperatura</span>
+                            <span class="data-item-value">3.042 K</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Alpha Centauri A -->
+            <article class="star-card">
+                <div class="star-header">
+                    <div class="star-rank">2</div>
+                    <div class="star-info">
+                        <h3>Alpha Centauri A</h3>
+                        <span class="star-type">Anã Amarela • G2V</span>
+                    </div>
+                    <div class="star-distance">
+                        <span class="distance-value">4.37</span>
+                        <span class="distance-unit">anos-luz</span>
+                    </div>
+                </div>
+                <div class="star-body">
+                    <div class="star-description">
+                        <p>
+                            Componente primário do sistema estelar mais brilhante do hemisfério sul. 
+                            Praticamente idêntica ao Sol em tipo espectral, massa e luminosidade, 
+                            representando o "Sol gêmeo" mais próximo conhecido.
+                        </p>
+                        <p>
+                            Orbita o companheiro Alpha Centauri B com período de 79,91 anos e 
+                            excentricidade orbital de 0,517. A estabilidade do sistema sugere 
+                            potencial para formação planetária, embora nenhum planeta tenha sido 
+                            confirmado neste componente específico.
+                        </p>
+                    </div>
+                    <div class="star-data">
+                        <div class="data-title">Dados Astrométricos</div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Aparente</span>
+                            <span class="data-item-value">+0.01</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Absoluta</span>
+                            <span class="data-item-value">+4.38</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Massa</span>
+                            <span class="data-item-value">1.079 M☉</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Luminosidade</span>
+                            <span class="data-item-value">1.519 L☉</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Alpha Centauri B -->
+            <article class="star-card">
+                <div class="star-header">
+                    <div class="star-rank">3</div>
+                    <div class="star-info">
+                        <h3>Alpha Centauri B</h3>
+                        <span class="star-type">Anã Laranja • K1V</span>
+                    </div>
+                    <div class="star-distance">
+                        <span class="distance-value">4.37</span>
+                        <span class="distance-unit">anos-luz</span>
+                    </div>
+                </div>
+                <div class="star-body">
+                    <div class="star-description">
+                        <p>
+                            Componente secundário do sistema Alpha Centauri, ligeiramente menor 
+                            e mais fria que nosso Sol. Sua cor alaranjada é perceptível mesmo 
+                            a olho nu quando vista separadamente do companheiro A.
+                        </p>
+                        <p>
+                            Em 2012, foi anunciada a descoberta de Alpha Centauri Bb, planeta 
+                            com massa similar à Terra em órbita de 3,24 dias. Posteriormente, 
+                            a detecção foi atribuída a artefatos instrumentais, embora a 
+                            possibilidade de planetas no sistema permaneça em investigação.
+                        </p>
+                    </div>
+                    <div class="star-data">
+                        <div class="data-title">Dados Astrométricos</div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Aparente</span>
+                            <span class="data-item-value">+1.33</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Absoluta</span>
+                            <span class="data-item-value">+5.71</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Massa</span>
+                            <span class="data-item-value">0.909 M☉</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Luminosidade</span>
+                            <span class="data-item-value">0.500 L☉</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Barnard -->
+            <article class="star-card">
+                <div class="star-header">
+                    <div class="star-rank">4</div>
+                    <div class="star-info">
+                        <h3>Estrela de Barnard</h3>
+                        <span class="star-type">Anã Vermelha • M4.0V</span>
+                    </div>
+                    <div class="star-distance">
+                        <span class="distance-value">5.96</span>
+                        <span class="distance-unit">anos-luz</span>
+                    </div>
+                </div>
+                <div class="star-body">
+                    <div class="star-description">
+                        <p>
+                            Possui a maior movimentação própria de todas as estrelas conhecidas, 
+                            atravessando o céu a uma velocidade angular de 10,3 segundos de arco 
+                            por ano — equivalente ao diâmetro da Lua a cada 180 anos.
+                        </p>
+                        <p>
+                            Descoberta por E.E. Barnard em 1916, é uma anã vermelha velha com 
+                            idade estimada entre 7 e 12 bilhões de anos. Sua velocidade espacial 
+                            de 142 km/s indica que é uma estrela populosa II, formada nos 
+                            primeiros estágios da galáxia.
+                        </p>
+                    </div>
+                    <div class="star-data">
+                        <div class="data-title">Dados Astrométricos</div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Aparente</span>
+                            <span class="data-item-value">+9.53</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Movimento Próprio</span>
+                            <span class="data-item-value">10.36"/ano</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Velocidade Radial</span>
+                            <span class="data-item-value">-110 km/s</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Idade Estimada</span>
+                            <span class="data-item-value">~10 G anos</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Luhman 16 -->
+            <article class="star-card">
+                <div class="star-header">
+                    <div class="star-rank">5</div>
+                    <div class="star-info">
+                        <h3>Luhman 16</h3>
+                        <span class="star-type">Anãs Marrons Binárias • L7.5 + T0.5</span>
+                    </div>
+                    <div class="star-distance">
+                        <span class="distance-value">6.50</span>
+                        <span class="distance-unit">anos-luz</span>
+                    </div>
+                </div>
+                <div class="star-body">
+                    <div class="star-description">
+                        <p>
+                            Sistema binário de anãs marrons descoberto em 2013 por Kevin Luhman 
+                            através de análise de dados do WISE. Representam os objetos 
+                            substelares mais próximos conhecidos, com massas insuficientes 
+                            para sustentar fusão de hidrogênio.
+                        </p>
+                        <p>
+                            O componente A possui temperatura efetiva de ~1.350 K, enquanto o B 
+                            atinge ~1.200 K. Ambos exibem padrões de nuvens atmosféricas complexas, 
+                            incluindo precipitação de ferro líquido na atmosfera do componente mais quente.
+                        </p>
+                    </div>
+                    <div class="star-data">
+                        <div class="data-title">Dados Astrométricos</div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Aparente (A)</span>
+                            <span class="data-item-value">+14.94</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Massa Total</span>
+                            <span class="data-item-value">~0.06 M☉</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Período Orbital</span>
+                            <span class="data-item-value">~27 anos</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Descoberta</span>
+                            <span class="data-item-value">2013</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- WISE 0855 -->
+            <article class="star-card">
+                <div class="star-header">
+                    <div class="star-rank">6</div>
+                    <div class="star-info">
+                        <h3>WISE 0855-0714</h3>
+                        <span class="star-type">Anã Marrom Subestelar • Y2V</span>
+                    </div>
+                    <div class="star-distance">
+                        <span class="distance-value">7.17</span>
+                        <span class="distance-unit">anos-luz</span>
+                    </div>
+                </div>
+                <div class="star-body">
+                    <div class="star-description">
+                        <p>
+                            O objeto conhecido mais frio fora do Sistema Solar, com temperatura 
+                            efetiva estimada entre 225-260 K (-48°C a -13°C). Descoberta em 2014, 
+                            representa a classe espectral Y, caracterizada por absorção de água 
+                            e metano em atmosferas extremamente frias.
+                        </p>
+                        <p>
+                            Sua baixa luminosidade e temperatura sugerem uma massa de 3-10 massas 
+                            de Júpiter, colocando-a na fronteira entre anãs marrons e planetas 
+                            gigantes isolados. A detecção de vapor d'água em sua atmosfera foi 
+                            confirmada em 2016.
+                        </p>
+                    </div>
+                    <div class="star-data">
+                        <div class="data-title">Dados Astrométricos</div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Aparente</span>
+                            <span class="data-item-value">+25.00 (est.)</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Temperatura</span>
+                            <span class="data-item-value">~250 K</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Massa</span>
+                            <span class="data-item-value">3-10 M♃</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Idade Estimada</span>
+                            <span class="data-item-value">1-10 G anos</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Sirius A -->
+            <article class="star-card">
+                <div class="star-header">
+                    <div class="star-rank">7</div>
+                    <div class="star-info">
+                        <h3>Sirius A</h3>
+                        <span class="star-type">Anã Branca-Azulada • A1V</span>
+                    </div>
+                    <div class="star-distance">
+                        <span class="distance-value">8.60</span>
+                        <span class="distance-unit">anos-luz</span>
+                    </div>
+                </div>
+                <div class="star-body">
+                    <div class="star-description">
+                        <p>
+                            A estrela mais brilhante do céu noturno terrestre, com magnitude 
+                            aparente de -1,46. Sua luminosidade de 25,4 L☉ é sustentada por 
+                            uma massa de 2,02 M☉, tornando-a significativamente mais massiva 
+                            que o Sol.
+                        </p>
+                        <p>
+                            A presença de Sirius B — anã branca com massa solar equivalente 
+                            comprimida em diâmetro similar ao da Terra — foi inferida por 
+                            Bessel em 1844 devido às perturbações orbitais, sendo confirmada 
+                            visualmente em 1862 por Alvan Clark.
+                        </p>
+                    </div>
+                    <div class="star-data">
+                        <div class="data-title">Dados Astrométricos</div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Aparente</span>
+                            <span class="data-item-value">-1.46</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Absoluta</span>
+                            <span class="data-item-value">+1.42</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Massa</span>
+                            <span class="data-item-value">2.063 M☉</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Temperatura</span>
+                            <span class="data-item-value">9.940 K</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Sirius B -->
+            <article class="star-card">
+                <div class="star-header">
+                    <div class="star-rank">8</div>
+                    <div class="star-info">
+                        <h3>Sirius B</h3>
+                        <span class="star-type">Anã Branca • DA2</span>
+                    </div>
+                    <div class="star-distance">
+                        <span class="distance-value">8.60</span>
+                        <span class="distance-unit">anos-luz</span>
+                    </div>
+                </div>
+                <div class="star-body">
+                    <div class="star-description">
+                        <p>
+                            A primeira anã branca descoberta na história da astronomia, 
+                            representando o estágio final de evolução de estrelas de massa 
+                            moderada. Com diâmetro de 11.200 km (92% do diâmetro terrestre) 
+                            e massa de 0,978 M☉, possui densidade média de 2,4 × 10⁶ g/cm³.
+                        </p>
+                        <p>
+                            A temperatura efetiva de 25.200 K gera intensa radiação ultravioleta. 
+                            Sua descoberta validou as predições da mecânica quântica sobre matéria 
+                            degenerada, constituindo um dos primeiros triunfos da astrofísica 
+                            teórica do século XX.
+                        </p>
+                    </div>
+                    <div class="star-data">
+                        <div class="data-title">Dados Astrométricos</div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Aparente</span>
+                            <span class="data-item-value">+8.44</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Diâmetro</span>
+                            <span class="data-item-value">0.0084 R☉</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Densidade Média</span>
+                            <span class="data-item-value">2.4×10⁶ g/cm³</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Período Orbital</span>
+                            <span class="data-item-value">50.13 anos</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Ross 154 -->
+            <article class="star-card">
+                <div class="star-header">
+                    <div class="star-rank">9</div>
+                    <div class="star-info">
+                        <h3>Ross 154</h3>
+                        <span class="star-type">Anã Vermelha • M3.5V</span>
+                    </div>
+                    <div class="star-distance">
+                        <span class="distance-value">9.68</span>
+                        <span class="distance-unit">anos-luz</span>
+                    </div>
+                </div>
+                <div class="star-body">
+                    <div class="star-description">
+                        <p>
+                        Uma anã vermelha localizada na constelação de Sagitário, representando o tipo mais comum de estrela no universo. Sua baixa massa e luminosidade a tornam um objeto de estudo importante para compreender a dinâmica estelar de baixa massa.
+
+                        Apesar da proximidade relativa, sua magnitude aparente de +10.45 a torna inacessível a observação astronômica amadora, exigindo equipamentos especializados para detecção.
+                        </p>
+                    </div>
+                    <div class="star-data">
+                        <div class="data-title">Dados Astrométricos</div>
+                        <div class="data-item">
+                            <span class="data-item-label">Magnitude Aparente</span>
+                            <span class="data-item-value">+10.45</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Massa</span>
+                            <span class="data-item-value">0.17 M☉</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Luminosidade</span>
+                            <span class="data-item-value">0.0038 L☉</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-item-label">Temperatura</span>
+                            <span class="data-item-value">3.340 K</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+    </main>
+
+    <footer>
+        <p class="footer-text">StarCosmiC © 2026 — Dados astrométricos: SIMBAD, NASA/IPAC</p>
+    </footer>
+</body>
+</html>

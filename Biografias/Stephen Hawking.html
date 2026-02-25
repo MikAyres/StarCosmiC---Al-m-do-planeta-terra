@@ -91,46 +91,60 @@
             justify-content: space-between;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            flex-shrink: 0;
-        }
+            .logo {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                flex-shrink: 0;
+            }
 
-        .logo-icon {
-            width: 124px;
-            height: 47px;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.2);
-        }
+            .logo-icon {
+                width: 200px;
+                height: 47px;
+                border-radius: 10px;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 2px solid rgba(255,255,255,0.2);
+                position: relative; /* Já tem isso, importante! */
+            }
 
-        .logo-icon::before {
-            content: '';
-            font-size: 24px;
-            color: white;
-            position: relative;
-            z-index: 2;
-        }
+            .logo-icon img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                position: absolute; /* Uma sobre a outra */
+                top: 0;
+                left: 0;
+                transition: opacity 0.3s ease; /* Suaviza a troca */
+            }
 
-        .logo-icon::after {
-            content: '';
-            position: absolute;
-            width: 60%;
-            height: 60%;
-            border: 2px solid rgba(255,255,255,0.4);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+            /* Desktop: mostra logo completa, esconde ícone */
+            .logo-desktop { 
+                opacity: 1;
+                z-index: 2;
+            }
+            .logo-mobile { 
+                opacity: 0;
+                z-index: 1;
+            }
+
+            /* Mobile: mostra ícone, esconde logo completa */
+            @media (max-width: 768px) {
+                .logo-icon {
+                    width: 47px;
+                    height: 47px;
+                }
+                
+                .logo-desktop { 
+                    opacity: 0;
+                }
+                .logo-mobile { 
+                    opacity: 1;
+                }
+            }
 
 
 
@@ -596,11 +610,15 @@
 
     <header>
         <div class="header-container">
-            <a href="../index.html" class="logo">
-                <div class="logo-icon">
-                    <img src="Images/Logo-StarCosmiC.jpeg" alt="Logo">
-                </div>
-            </a>
+        <!-- Logo -->
+        <a href="../index.html" class="logo">
+            <div class="logo-icon">
+                <!-- Desktop: logo completa -->
+                <img src="Images/Logo-StarCosmiC.png" alt="StarCosmiC">
+                <!-- Mobile: só o ícone -->
+                <img src="Images/LogoMobile.png" alt="StarCosmiC" class="logo-mobile">
+            </div>
+        </a>
             <a href="../index.html" class="back-btn">
                 ← Voltar
             </a>

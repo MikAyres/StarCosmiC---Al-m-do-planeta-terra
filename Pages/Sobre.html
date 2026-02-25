@@ -85,12 +85,12 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
             text-decoration: none;
+            flex-shrink: 0;
         }
 
         .logo-icon {
-            width: 124px;  /* Desktop */
+            width: 200px;
             height: 47px;
             border-radius: 10px;
             overflow: hidden;
@@ -98,24 +98,44 @@
             align-items: center;
             justify-content: center;
             border: 2px solid rgba(255,255,255,0.2);
-            
+            position: relative; /* Já tem isso, importante! */
         }
 
         .logo-icon img {
             width: 100%;
             height: 100%;
-            object-fit: cover; 
+            object-fit: cover;
             display: block;
+            position: absolute; /* Uma sobre a outra */
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease; /* Suaviza a troca */
         }
 
-        .logo-text {
-            font-family: 'Cinzel', serif;
-            font-size: 22px;
-            font-weight: 600;
-            color: white;
-            letter-spacing: 2px;
+        /* Desktop: mostra logo completa, esconde ícone */
+        .logo-desktop { 
+            opacity: 1;
+            z-index: 2;
+        }
+        .logo-mobile { 
+            opacity: 0;
+            z-index: 1;
         }
 
+        /* Mobile: mostra ícone, esconde logo completa */
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 47px;
+                height: 47px;
+            }
+            
+            .logo-desktop { 
+                opacity: 0;
+            }
+            .logo-mobile { 
+                opacity: 1;
+            }
+        }
         .back-btn {
             color: var(--text-secondary);
             text-decoration: none;
@@ -472,11 +492,16 @@
 
        <header>
         <div class="header-container">
-            <a href="../index.html" class="logo">
-                <div class="logo-icon">
-                    <img src="Images/Logo-StarCosmiC.jpeg" alt="Logo">
-                </div>
-            </a>
+                    <!-- Logo -->
+        <a href="../index.html" class="logo">
+            <div class="logo-icon">
+                <!-- Desktop: logo completa -->
+                <img src="Images/Logo-StarCosmiC.png" alt="StarCosmiC">
+                <!-- Mobile: só o ícone -->
+                <img src="Images/LogoMobile.png" alt="StarCosmiC" class="logo-mobile">
+            </div>
+        </a>
+
             <a href="../index.html" class="back-btn">
                 ← Voltar
             </a>
@@ -592,7 +617,7 @@
                 Se você é uma pessoa que tem interesse ou curiosidade sobre como o Setor Espacial funciona, 
                 faça o login e venha conhecer nossos trabalhos.
             </p>
-            <a href="login.html" class="cta-button">Explorar o Universo</a>
+            <a href="Pages/Login.html" class="cta-button">Explorar o Universo</a>
 
             <div class="update-badge">
                 <span class="pulse"></span>

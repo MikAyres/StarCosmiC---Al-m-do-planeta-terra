@@ -76,7 +76,7 @@
         }
 
         .logo-icon {
-            width: 124px;  /* Desktop */
+            width: 200px;
             height: 47px;
             border-radius: 10px;
             overflow: hidden;
@@ -84,29 +84,43 @@
             align-items: center;
             justify-content: center;
             border: 2px solid rgba(255,255,255,0.2);
-            /* REMOVIDO: background, ::before, ::after (não precisa com imagem) */
+            position: relative; /* Já tem isso, importante! */
         }
 
         .logo-icon img {
             width: 100%;
             height: 100%;
-            object-fit: cover;  /* ou 'contain' se quiser ver a logo toda */
+            object-fit: cover;
             display: block;
+            position: absolute; /* Uma sobre a outra */
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease; /* Suaviza a troca */
         }
 
-        /* MOBILE - Logo menor */
+        /* Desktop: mostra logo completa, esconde ícone */
+        .logo-desktop { 
+            opacity: 1;
+            z-index: 2;
+        }
+        .logo-mobile { 
+            opacity: 0;
+            z-index: 1;
+        }
+
+        /* Mobile: mostra ícone, esconde logo completa */
         @media (max-width: 768px) {
             .logo-icon {
-                width: 47px;   /* Quadrado, só o ícone */
+                width: 47px;
                 height: 47px;
             }
             
-            /* Se quiser esconder completamente no mobile muito pequeno: */
-            /*
-            .logo {
-                display: none;
+            .logo-desktop { 
+                opacity: 0;
             }
-            */
+            .logo-mobile { 
+                opacity: 1;
+            }
         }
         .icon-login {
             width: 45px;
@@ -241,6 +255,34 @@
             color: white;
         }
 
+        .linkar{
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .linkar::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 1px;
+            background: white;
+            transition: width 0.5s;
+        }
+
+        .linkar:hover {
+            color: white;
+        }
+
+        .linkar:hover::after {
+            width: 100%;
+        }
+
+
         /* News Grid */
         .news-grid {
             display: grid;
@@ -251,6 +293,7 @@
 
         .featured-news {
             position: relative;
+            height: 570px;
             border-radius: 15px;
             overflow: hidden;
             background: var(--bg-card);
@@ -475,6 +518,11 @@
             font-weight: 300;
         }
 
+        .link-sem-sub{
+            text-decoration: none; 
+            color: inherit; 
+
+        }
         .scientist-link {
             margin-top: 20px;
             color: rgba(255,255,255,0.6);

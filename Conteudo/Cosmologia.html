@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>James Webb: Revolução na Astronomia - StarCosmiC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --bg-elevated: #0d3a5c;
+            --accent-gold: #d4af37;
+            --accent-cyan: #4a9eff;
+            --accent-orange: #ff6b35;
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --text-muted: rgba(255, 255, 255, 0.5);
+            --border-subtle: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* Background */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 80% 20%, rgba(255, 107, 53, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 20% 80%, rgba(74, 158, 255, 0.06) 0%, transparent 50%);
+        }
+
+        .nebula-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.15;
+            background: url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1920&q=80') center/cover;
+            mix-blend-mode: screen;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 25, 40, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 12px 0;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+                    .logo {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                flex-shrink: 0;
+            }
+
+            .logo-icon {
+                width: 200px;
+                height: 47px;
+                border-radius: 10px;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 2px solid rgba(255,255,255,0.2);
+                position: relative; /* Já tem isso, importante! */
+            }
+
+            .logo-icon img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                position: absolute; /* Uma sobre a outra */
+                top: 0;
+                left: 0;
+                transition: opacity 0.3s ease; /* Suaviza a troca */
+            }
+
+            /* Desktop: mostra logo completa, esconde ícone */
+            .logo-desktop { 
+                opacity: 1;
+                z-index: 2;
+            }
+            .logo-mobile { 
+                opacity: 0;
+                z-index: 1;
+            }
+
+            /* Mobile: mostra ícone, esconde logo completa */
+            @media (max-width: 768px) {
+                .logo-icon {
+                    width: 47px;
+                    height: 47px;
+                }
+                
+                .logo-desktop { 
+                    opacity: 0;
+                }
+                .logo-mobile { 
+                    opacity: 1;
+                }
+            }
+
+        .back-btn {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 16px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            color: white;
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Main */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+
+        /* Article Header */
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-tag {
+            padding: 6px 16px;
+            background: rgba(255, 107, 53, 0.15);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            color: var(--accent-orange);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 20px;
+        }
+
+        .date {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .author {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 42px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-family: 'Crimson Text', serif;
+            font-size: 22px;
+            color: var(--text-secondary);
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        /* Hero Image */
+        .hero-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 50px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: -40px;
+            margin-bottom: 50px;
+            font-style: italic;
+        }
+
+        /* Content */
+        .content {
+            font-family: 'Crimson Text', serif;
+            font-size: 19px;
+            line-height: 1.9;
+            color: var(--text-secondary);
+        }
+
+        .content p {
+            margin-bottom: 28px;
+            text-align: justify;
+        }
+
+        .content strong {
+            color: white;
+            font-weight: 600;
+        }
+
+        .lead {
+            font-size: 22px;
+            line-height: 1.8;
+            color: white;
+            border-left: 4px solid var(--accent-orange);
+            padding-left: 30px;
+            margin: 40px 0;
+            font-style: italic;
+        }
+
+        /* Section Dividers */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 60px 0 40px;
+        }
+
+        .section-header::before,
+        .section-header::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--border-subtle), transparent);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            white-space: nowrap;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            color: white;
+            margin: 50px 0 25px;
+            font-weight: 400;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: var(--accent-cyan);
+            margin: 35px 0 20px;
+            font-weight: 600;
+        }
+
+        /* Data Box */
+        .data-highlight {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 35px;
+            margin: 40px 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            text-align: center;
+        }
+
+        .data-item {
+            position: relative;
+        }
+
+        .data-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 50px;
+            width: 1px;
+            background: var(--border-subtle);
+        }
+
+        .data-value {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            color: var(--accent-orange);
+            display: block;
+            line-height: 1;
+        }
+
+        .data-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 40px 0;
+            font-size: 15px;
+        }
+
+        .comparison-table th {
+            background: var(--bg-elevated);
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            color: white;
+            border-bottom: 2px solid var(--border-subtle);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .comparison-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+
+        .comparison-table tr:hover td {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .highlight-cell {
+            color: var(--accent-orange);
+            font-weight: 600;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-orange), var(--accent-gold));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 30px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -44px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-orange);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+        }
+
+        .timeline-date {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            color: var(--accent-orange);
+            margin-bottom: 8px;
+        }
+
+        .timeline-content {
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* Image Grid */
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .image-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16/10;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 25px;
+            background: linear-gradient(to top, rgba(5,25,40,0.95), transparent);
+        }
+
+        .image-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .image-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: linear-gradient(135deg, rgba(255,107,53,0.08), rgba(8,38,60,0.8));
+            border-left: 4px solid var(--accent-orange);
+            padding: 35px;
+            margin: 50px 0;
+            border-radius: 0 16px 16px 0;
+        }
+
+        .quote-text {
+            font-size: 22px;
+            font-style: italic;
+            line-height: 1.6;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .quote-author {
+            font-size: 14px;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+        }
+
+        /* Future Box */
+        .future-box {
+            background: linear-gradient(135deg, rgba(74,158,255,0.08), var(--bg-card));
+            border: 1px solid rgba(74,158,255,0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .future-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .future-title {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+        }
+
+        .future-text {
+            font-size: 17px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .article-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 25px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            max-width: 300px;
+        }
+
+        .nav-btn:hover {
+            border-color: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+
+        .nav-btn.prev:hover {
+            transform: translateX(-5px);
+        }
+
+        .nav-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        .nav-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #020d14, transparent);
+            border-top: 1px solid var(--border-subtle);
+            padding: 40px 30px;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+            
+            .hero-image {
+                height: 250px;
+            }
+            
+            .data-highlight {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .data-item:not(:last-child)::after {
+                display: none;
+            }
+            
+            .comparison-table {
+                font-size: 13px;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px;
+            }
+            
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .article-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="nebula-overlay"></div>
+
+    <header>
+        <div class="header-container">
+                    <!-- Logo -->
+            <a href="../index.html" class="logo">
+            <div class="logo-icon">
+                <!-- Desktop: logo completa -->
+                <img src="Images/Logo-StarCosmiC.png" alt="StarCosmiC">
+                <!-- Mobile: só o ícone -->
+                <img src="Images/LogoMobile.png" alt="StarCosmiC" class="logo-mobile">
+            </div>
+        </a>
+            <a href="../index.html" class="back-btn">← Voltar</a>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <div class="article-meta">
+                <span class="category-tag">Cosmologia</span>
+                <span class="date">25 de Dezembro de 2021 • Atualizado em 2024</span>
+                <span class="author">Por StarCosmiC Research</span>
+            </div>
+
+            <h1>Como o Telescópio James Webb está Mudando a Astronomia</h1>
+            
+            <p class="subtitle">
+                O maior observatório espacial já construído redefine nossa compreensão do universo, 
+                revelando galáxias primordiais, atmosferas exoplanetárias e os segredos mais profundos do cosmos.
+            </p>
+
+            <img src="Images/JamesWebb.jpg" alt="James Webb Space Telescope" class="hero-image">
+            
+            <p class="image-caption">
+                Ilustração artística do Telescópio Espacial James Webb em sua órbita no ponto L2, 
+                a 1,5 milhão de quilômetros da Terra. Crédito: NASA/Adriana Manrique Gutierrez
+            </p>
+
+            <div class="content">
+                <p class="lead">
+                    Lançado em 25 de dezembro de 2021, após três décadas de desenvolvimento e investimento 
+                    de 10 bilhões de dólares, o Telescópio Espacial James Webb (JWST) representa o mais 
+                    ambicioso empreendimento da astronomia moderna. Operando no infravermelho profundo, 
+                    ele não apenas complementa seu predecessor, o Hubble — ele inaugura uma nova era de 
+                    descobertas cosmológicas.
+                </p>
+
+                <p>
+                    Enquanto o Telescópio Espacial Hubble revolucionou nossa visão do universo operando 
+                    principalmente em luz visível e ultravioleta, o James Webb foi projetado especificamente 
+                    para capturar a radiação infravermelha. Esta escolha não é arbitrária: a luz dos objetos 
+                    mais distantes e antigos do universo, devido à expansão cósmica, sofre desvio para o 
+                    vermelho (redshift), deslocando-se precisamente para o espectro infravermelho.
+                </p>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span class="data-value">10B</span>
+                        <span class="data-label">Dólares Investidos</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-value">6.5t</span>
+                        <span class="data-label">Massa Total</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-value">L2</span>
+                        <span class="data-label">Ponto de Lagrange</span>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <span class="section-title">Especificações Técnicas</span>
+                </div>
+
+                <h2>Webb vs. Hubble: A Evolução Tecnológica</h2>
+
+                <p>
+                    A comparação entre os dois grandes observatórios espaciais revela não apenas avanços 
+                    tecnológicos, mas uma mudança de paradigma na forma como observamos o universo. 
+                    Enquanto o Hubble nos mostrou o cosmos em sua juventude, o Webb nos permite ver 
+                    sua infância — os primeiros 400 milhões de anos após o Big Bang.
+                </p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Parâmetro</th>
+                            <th>Hubble (HST)</th>
+                            <th>James Webb (JWST)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lançamento</td>
+                            <td>1990</td>
+                            <td class="highlight-cell">2021</td>
+                        </tr>
+                        <tr>
+                            <td>Diâmetro do Espelho</td>
+                            <td>2.4 metros</td>
+                            <td class="highlight-cell">6.5 metros</td>
+                        </tr>
+                        <tr>
+                            <td>Área de Coleta</td>
+                            <td>4.5 m²</td>
+                            <td class="highlight-cell">25 m²</td>
+                        </tr>
+                        <tr>
+                            <td>Comprimento de Onda</td>
+                            <td>Visível, UV, IR próximo</td>
+                            <td class="highlight-cell">IR médio e profundo</td>
+                        </tr>
+                        <tr>
+                            <td>Resolução Angular</td>
+                            <td>0.05 arcseg</td>
+                            <td class="highlight-cell">0.03 arcseg (IR)</td>
+                        </tr>
+                        <tr>
+                            <td>Órbita</td>
+                            <td>600 km da Terra</td>
+                            <td class="highlight-cell">1.5 milhão km (L2)</td>
+                        </tr>
+                        <tr>
+                            <td>Operação Estimada</td>
+                            <td>1990-2030+</td>
+                            <td class="highlight-cell">2022-2040+</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>O Espelho Segmentado de Berílio</h3>
+
+                <p>
+                    O elemento definidor do JWST é seu espelho primário composto por 18 segmentos 
+                    hexagonais de berílio revestidos com ouro. Com 6.5 metros de diâmetro — quase 
+                    três vezes o do Hubble — esta estrutura representa um feito sem precedentes de 
+                    engenharia óptica. O berílio foi escolhido por sua rigidez, leveza e condutividade 
+                    térmica excepcional, enquanto o revestimento de ouro (100 nanômetros) otimiza a 
+                    reflexão de radiação infravermelha.
+                </p>
+
+                <div class="section-header">
+                    <span class="section-title">Cronologia da Missão</span>
+                </div>
+
+                <h2>Da Concepção às Primeiras Imagens</h2>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1996</div>
+                        <div class="timeline-content">
+                            <strong>Concepção:</strong> A NASA formaliza o Next Generation Space Telescope 
+                            (NGST), posteriormente renomeado em homenagem a James E. Webb, administrador 
+                            da NASA durante o Programa Apollo.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">25 Dez 2021</div>
+                        <div class="timeline-content">
+                            <div class="timeline-content">
+                                <strong>Lançamento:</strong> Decolagem do Ariane 5 do Centro Espacial 
+                                Europeu em Kourou, Guiana Francesa. A operação de deploy de 29 dias 
+                                incluiu a complexa abertura do escudo solar e do espelho primário.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">11 Jul 2022</div>
+                        <div class="timeline-content">
+                            <strong>Primeiras Imagens:</strong> Divulgação do SMACS 0723, Quinteto de 
+                            Stephan, Nebulosa do Anel Sul, Carina, WASP-96b e NGC 3324 — inaugurando 
+                            a era de observações científicas.
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2023-2024</div>
+                        <div class="timeline-content">
+                            <strong>Descobertas Revolucionárias:</strong> Detecção de galáxias candidatas 
+                            a menos de 400 milhões de anos após o Big Bang, análise atmosférica de 
+                            exoplanetas rochosos, e imagens sem precedentes da formação estelar.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <span class="section-title">Descobertas Fundamentais</span>
+                </div>
+
+                <h2>Reescrevendo a História do Universo</h2>
+
+                <p>
+                    Em menos de dois anos de operações científicas plenas, o James Webb já provocou 
+                    revisões significativas em modelos cosmológicos estabelecidos. Suas observações 
+                    do campo ultra-profundo revelaram galáxias massivas e maduras existentes apenas 
+                    300-500 milhões de anos após o Big Bang — desafiando teorias sobre a velocidade 
+                    de formação de estruturas no universo primitivo.
+                </p>
+
+                <div class="image-grid">
+                    <div class="image-card">
+                        <img src="Images/SMACS0723.png" alt="SMACS 0723">
+                        <div class="image-overlay">
+                            <div class="image-title">SMACS 0723</div>
+                            <div class="image-desc">Campo profundo com lentes gravitacionais</div>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <img src="Images/Pilares.png" alt="Pilares da Criação">
+                        <div class="image-overlay">
+                            <div class="image-title">Pilares da Criação</div>
+                            <div class="image-desc">Nebulosa de Águia em infravermelho</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Atmosferas Exoplanetárias</h3>
+
+                <p>
+                    A espectroscopia de transmissão do JWST permitiu a primeira detecção detalhada 
+                    de atmosferas de exoplanetas rochosos. Em WASP-39b, identificou-se dióxido de 
+                    carbono, água e — surpreendentemente — dióxido de enxofre, sugerindo processos 
+                    de formação planetária mais complexos que o previsto. Estas medições abrem 
+                    caminho para a busca de biossematuras em mundos potencialmente habitáveis.
+                </p>
+
+                <div class="quote-block">
+                    <p class="quote-text">
+                        "O James Webb não está apenas vendo o universo de forma diferente — 
+                        ele está nos fazendo repensar tudo o que acreditávamos saber sobre 
+                        nossas origens cósmicas."
+                    </p>
+                    <div class="quote-author">— Dr. Jane Rigby, Cientista do Projeto JWST</div>
+                </div>
+
+                <div class="section-header">
+                    <span class="section-title">O Futuro</span>
+                </div>
+
+                <h2>Próximos Anos de Descobertas</h2>
+
+                <p>
+                    Com uma expectativa de vida útil de 20 anos — graças à eficiência do lançamento 
+                    e ao gerenciamento de propelente — o James Webb continuará a expandir fronteiras. 
+                    Os ciclos de observação 2024-2025 incluem estudos detalhados de Júpiter e seus 
+                    satélites, análise de atmosferas de exoplanetas no habitable zone, e campanhas 
+                    de mapeamento de regiões de formação estelar.
+                </p>
+
+                <div class="future-box">
+                    <div class="future-icon">🔭</div>
+                    <h3 class="future-title">A Próxima Década</h3>
+                    <p class="future-text">
+                        O JWST operará em sinergia com futuras missões como o Telescópio Espacial 
+                        Nancy Grace Roman (2027) e o Extremely Large Telescope terrestre, formando 
+                        uma rede de observação multi-comprimento de onda sem precedentes na história 
+                        da astronomia.
+                    </p>
+                </div>
+
+                <p>
+                    O legado do James Webb transcenderá suas descobertas individuais. Ele estabelece 
+                    novos padrões para exploração espacial robótica, demonstra a viabilidade de 
+                    estruturas espaciais complexas e — acima de tudo — reafirma nossa capacidade 
+                    coletiva de estender a mente humana além dos limites do sistema solar, em busca 
+                    das primeiras luzes do universo.
+                </p>
+            </div>
+        </article>
+
+        <nav class="article-nav">
+            <a href="#" class="nav-btn prev">
+                <div>
+                    <div class="nav-label">← Anterior</div>
+                    <div class="nav-title">O Big Bang: Evidências</div>
+                </div>
+            </a>
+            <a href="#" class="nav-btn next">
+                <div style="text-align: right;">
+                    <div class="nav-label">Próximo →</div>
+                    <div class="nav-title">Buracos Negros Supermassivos</div>
+                </div>
+            </a>
+        </nav>
+    </main>
+
+    <footer>
+        <p class="footer-text">StarCosmiC © 2026 — Fonte: NASA, ESA, CSA, STScI</p>
+    </footer>
+</body>
+</html>
