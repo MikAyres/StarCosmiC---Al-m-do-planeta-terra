@@ -8,6 +8,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@200;300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <!-- Favicon padrão (aba do navegador) -->
+    <link rel="icon" type="image/x-icon" href="../Images/Favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="96x96" href="../Images/Favicon/favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="../Images/Favicon/favicon.svg">
+
+    <!-- Apple Touch Icon (iPhone/iPad) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../Images/Favicon/apple-touch-icon.png">
+
+    <!-- Android/Chrome -->
+    <link rel="icon" type="image/png" sizes="192x192" href="../Images/Favicon/web-app-manifest-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="../Images/Favicon/web-app-manifest-512x512.png">
+
+    <!-- Manifest (para PWA) -->
+    <link rel="manifest" href="../Images/Favicon/site.webmanifest">
 </head>
 <body>
     <div class="stars-bg"></div>
@@ -78,39 +92,52 @@
                 </div>
             </article>
         </a>
-            <div class="side-news">
-                <a href="Conteudo/Cosmologia.html" class="linkar">
-                <article class="news-card">
-                    <img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&q=80" alt="James Webb">
-                    <div class="news-card-content">
-                        <span class="category-tag">Cosmologia</span>
-                        <h3 class="news-card-title">Como o telescópio James Webb está mudando a astronomia</h3>
-                    </div>
-                </article>
+                    <div class="side-news">
+    <!-- Card 1 - James Webb (grande) -->
+    <article class="news-card linkar">
+        <a href="Conteudo/Cosmologia.html"><img src="https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&q=80" alt="James Webb"></a>
+        <div class="news-card-content">
+            <span class="category-tag">Cosmologia</span>
+            <h3 class="news-card-title">
+                <a href="Conteudo/Cosmologia.html">
+                    Como o telescópio James Webb está mudando a astronomia
                 </a>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <a href="Conteudo/Esploracao.html" class="linkar">
-                    <article class="news-card small">
-                        <img src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=400&q=80" alt="Exploração">
-                        <div class="news-card-content">
-                            <span class="category-tag">Exploração Espacial</span>
-                            <h3 class="news-card-title" style="font-size: 16px;">Módulo japonês perde contato momentos antes do pouso</h3>
-                        </div>
-                    </article>
-                    </a>
-                    
-                    <article class="news-card small">
-                        <img src="Images/exoplaneta-agua.webp" alt="Exoplanetas">
-                        <div class="news-card-content">
-                            <span class="category-tag">Planetas</span>
-                            <h3 class="news-card-title" style="font-size: 16px;">Como observar exoplanetas do seu quintal</h3>
-                        </div>
-                    </article>
-                </div>
-            </div>
+            </h3>
         </div>
-
+    </article>
+    
+    <!-- Grid dos dois cards menores -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        
+        <!-- Card 2 - Exploração -->
+        <article class="news-card small linkar">
+            <a href="Conteudo/Esploracao.html"><img src="Images/Exploração Espacial.jpg" alt="Exploração"></a>
+            <div class="news-card-content">
+                <span class="category-tag">Exploração Espacial</span>
+                <h3 class="news-card-title" style="font-size: 16px;">
+                    <a href="Conteudo/Esploracao.html">
+                        Módulo japonês perde contato momentos antes do pouso
+                    </a>
+                </h3>
+            </div>
+        </article>
+        
+        <!-- Card 3 - Exoplanetas -->
+        <article class="news-card small linkar">
+            <a href="Conteudo/Planetas.html"><img src="Images/exoplaneta-agua.webp" alt="Exoplanetas"></a>
+            <div class="news-card-content">
+                <span class="category-tag">Planetas</span>
+                <h3 class="news-card-title" style="font-size: 16px;">
+                    <a href="Conteudo/Planetas.html">
+                        Como observar exoplanetas do seu quintal
+                    </a>
+                </h3>
+            </div>
+        </article>
+        
+    </div>  <!-- fecha o grid -->
+</div>  <!-- fecha o side-news -->
+</div>
         <!-- Fotos Astronômicas -->
         <div class="section-header">
             <h2 class="section-title">Fotos Astronômicas</h2>
