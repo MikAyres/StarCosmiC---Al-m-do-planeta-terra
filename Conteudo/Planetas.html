@@ -623,6 +623,31 @@
                 max-width: 100%;
             }
         }
+
+        /* Container que permite o scroll lateral sem quebrar o layout */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto; /* Ativa o scroll horizontal se a tabela for grande */
+    -webkit-overflow-scrolling: touch; /* Deixa o scroll suave no iPhone */
+    margin: 40px 0;
+    border-radius: 12px;
+    border: 1px solid var(--border-subtle);
+    background: rgba(8, 38, 60, 0.3); /* Um fundo leve para combinar com o tema */
+}
+
+/* Garante que a tabela tenha um tamanho mínimo para não ficar ilegível */
+@media (max-width: 768px) {
+    .target-table {
+        min-width: 650px; /* Força o scroll em telas pequenas */
+        margin: 0; /* Remove margens extras dentro do wrapper */
+    }
+    
+    .target-table th, 
+    .target-table td {
+        padding: 12px 10px;
+        font-size: 14px;
+    }
+}
     </style>
 </head>
 <body>
@@ -774,7 +799,7 @@
                     diferencial.
                 </p>
 
-                <div class="section-header">
+                                <div class="section-header">
                     <span class="section-title">Alvos Recomendados</span>
                 </div>
 
@@ -787,77 +812,77 @@
                     probabilidade de detecção com equipamentos modestos.
                 </p>
 
-                <table class="target-table">
-                    <thead>
-                        <tr>
-                            <th>Sistema</th>
-                            <th>Estrela (V)</th>
-                            <th>Profundidade</th>
-                            <th>Período</th>
-                            <th>Duração</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>WASP-19b</strong></td>
-                            <td class="magnitude">12.3</td>
-                            <td>2.06%</td>
-                            <td>0.79 dias</td>
-                            <td>2.0h</td>
-                        </tr>
-                        <tr>
-                            <td><strong>HAT-P-1b</strong></td>
-                            <td class="magnitude">10.4</td>
-                            <td>1.19%</td>
-                            <td>4.47 dias</td>
-                            <td>2.9h</td>
-                        </tr>
-                        <tr>
-                            <td><strong>HD 189733b</strong></td>
-                            <td class="magnitude">7.7</td>
-                            <td>2.41%</td>
-                            <td>2.22 dias</td>
-                            <td>1.8h</td>
-                        </tr>
-                        <tr>
-                            <td><strong>WASP-43b</strong></td>
-                            <td class="magnitude">12.4</td>
-                            <td>2.00%</td>
-                            <td>0.81 dias</td>
-                            <td>1.6h</td>
-                        </tr>
-                        <tr>
-                            <td><strong>TrES-3b</strong></td>
-                            <td class="magnitude">12.4</td>
-                            <td>2.60%</td>
-                            <td>1.31 dias</td>
-                            <td>1.3h</td>
-                        </tr>
-
-                        <tr>
-                            <td><strong>WASP-39b</strong></td>
-                            <td class="magnitude">12.1</td>
-                            <td>2.00%</td>
-                            <td>4.06 dias</td>
-                            <td>2.8h</td>
-                        </tr>
-                        <tr>
-                            <td><strong>WASP-17b</strong></td>
-                            <td class="magnitude">11.6</td>
-                            <td>1.60%</td>
-                            <td>3.74 dias</td>
-                            <td>2.5h</td>
-                        </tr>
-                        <tr>
-                            <td><strong>HD 209458b</strong></td>
-                            <td class="magnitude">7.7</td>
-                            <td>1.50%</td>
-                            <td>3.52 dias</td>
-                            <td>3.0h</td>
-                        </tr>
-                    </tbody>
-                </table>
-
+                <div class="table-wrapper">
+                    <table class="target-table">
+                        <thead>
+                            <tr>
+                                <th>Sistema</th>
+                                <th>Estrela (V)</th>
+                                <th>Profundidade</th>
+                                <th>Período</th>
+                                <th>Duração</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>WASP-19b</strong></td>
+                                <td class="magnitude">12.3</td>
+                                <td>2.06%</td>
+                                <td>0.79 dias</td>
+                                <td>2.0h</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HAT-P-1b</strong></td>
+                                <td class="magnitude">10.4</td>
+                                <td>1.19%</td>
+                                <td>4.47 dias</td>
+                                <td>2.9h</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HD 189733b</strong></td>
+                                <td class="magnitude">7.7</td>
+                                <td>2.41%</td>
+                                <td>2.22 dias</td>
+                                <td>1.8h</td>
+                            </tr>
+                            <tr>
+                                <td><strong>WASP-43b</strong></td>
+                                <td class="magnitude">12.4</td>
+                                <td>2.00%</td>
+                                <td>0.81 dias</td>
+                                <td>1.6h</td>
+                            </tr>
+                            <tr>
+                                <td><strong>TrES-3b</strong></td>
+                                <td class="magnitude">12.4</td>
+                                <td>2.60%</td>
+                                <td>1.31 dias</td>
+                                <td>1.3h</td>
+                            </tr>
+                            <tr>
+                                <td><strong>WASP-39b</strong></td>
+                                <td class="magnitude">12.1</td>
+                                <td>2.00%</td>
+                                <td>4.06 dias</td>
+                                <td>2.8h</td>
+                            </tr>
+                            <tr>
+                                <td><strong>WASP-17b</strong></td>
+                                <td class="magnitude">11.6</td>
+                                <td>1.60%</td>
+                                <td>3.74 dias</td>
+                                <td>2.5h</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HD 209458b</strong></td>
+                                <td class="magnitude">7.7</td>
+                                <td>1.50%</td>
+                                <td>3.52 dias</td>
+                                <td>3.0h</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="section-header">
                     <span class="section-title">Procedimento</span>
                 </div>
