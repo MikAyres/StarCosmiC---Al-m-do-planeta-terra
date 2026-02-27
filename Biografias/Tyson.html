@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neil deGrasse Tyson - StarCosmiC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@200;300;400;500;600;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --bg-light: #0d3a5c;
+            --text-primary: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-gold: #d4af37;
+            --accent-blue: #4a90e2;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.7), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.4;
+            animation: twinkle 8s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 25, 40, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 200px;
+            height: 47px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-desktop { 
+            opacity: 1;
+            z-index: 2;
+        }
+        .logo-mobile { 
+            opacity: 0;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 47px;
+                height: 47px;
+            }
+            
+            .logo-desktop { 
+                opacity: 0;
+            }
+            .logo-mobile { 
+                opacity: 1;
+            }
+        }
+
+        .back-btn {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            transition: all 0.3s;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Article Header - COMPACTO */
+        .article-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .category-label {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--accent-gold);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            font-weight: 300;
+            font-style: italic;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Vital Stats - COMPACTO */
+        .vital-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0 0;
+            padding: 15px;
+            background: rgba(8, 38, 60, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px 5px;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            line-height: 1.4;
+        }
+
+        .stat-value.highlight {
+            color: var(--accent-gold);
+        }
+
+        /* Hero Image */
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            object-position: center 20%;
+            border-radius: 12px;
+            margin: 25px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Article Content */
+        .article-content {
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .article-content p {
+            margin-bottom: 22px;
+            text-align: justify;
+        }
+
+        .lead {
+            font-size: 19px;
+            line-height: 1.7;
+            color: white;
+            font-weight: 400;
+            border-left: 3px solid var(--accent-gold);
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+        }
+
+        /* Section Dividers */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            margin: 40px 0 30px;
+            gap: 15px;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            white-space: nowrap;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-gold), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 5px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .timeline-year {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            color: var(--accent-gold);
+            margin-bottom: 8px;
+        }
+
+        .timeline-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* Books Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .book-card {
+            background: rgba(8, 38, 60, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 18px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent-gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .book-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .book-year {
+            font-size: 10px;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .book-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .book-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: linear-gradient(135deg, rgba(8, 38, 60, 0.8), rgba(13, 58, 92, 0.4));
+            border-left: 3px solid var(--accent-gold);
+            padding: 25px;
+            margin: 35px 0;
+            border-radius: 0 12px 12px 0;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 60px;
+            color: rgba(212, 175, 55, 0.15);
+            font-family: 'Cinzel', serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 20px;
+            font-style: italic;
+            line-height: 1.5;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+        }
+
+        /* Legacy Section */
+        .legacy-box {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .legacy-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .legacy-title {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .legacy-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.9);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Footer */
+        .article-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background: rgba(8, 38, 60, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            max-width: 250px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(8, 38, 60, 0.8);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateX(5px);
+        }
+
+        .nav-btn.prev:hover {
+            transform: translateX(-5px);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        .nav-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #020d14, transparent);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 26px;
+            }
+            
+            .vital-stats {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            
+            .hero-image {
+                height: 250px;
+            }
+            
+            .article-content {
+                font-size: 16px;
+            }
+            
+            .quote-block {
+                padding: 20px;
+            }
+            
+            .quote-text {
+                font-size: 18px;
+            }
+            
+            .article-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                max-width: 100%;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="stars"></div>
+
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../Images/Logo-StarCosmiC.png" alt="StarCosmiC" class="logo-desktop">
+                    <img src="../Images/LogoMobile.png" alt="StarCosmiC" class="logo-mobile">
+                </div>
+            </a>
+            <a href="../index.html" class="back-btn">
+                ← Voltar
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <div class="bio-sticky">
+                <header class="article-header">
+                    <span class="category-label">Biografia</span>
+                    <h1>Neil deGrasse Tyson</h1>
+                    <p class="subtitle">"O herdeiro de Sagan na divulgação científica moderna"</p>
+                    
+                    <div class="vital-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Nascimento</div>
+                            <div class="stat-value">5 Out 1958<br><span style="font-size: 11px; opacity: 0.7;">Nova York, EUA</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Atuação</div>
+                            <div class="stat-value highlight">Astrofísico<br><span style="font-size: 11px; opacity: 0.7;">& Divulgador</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Legado</div>
+                            <div class="stat-value">Diretor do<br><span style="font-size: 11px; opacity: 0.7;">Planetário Hayden</span></div>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+            <img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Tyson_-_Apollo_40th_anniversary_2009.jpg" alt="Neil deGrasse Tyson" class="hero-image">
+
+            <div class="article-content">
+                <p class="lead">
+                    Neil deGrasse Tyson é um astrofísico, autor e divulgador científico americano que se tornou o rosto mais reconhecível da astronomia moderna. Como diretor do Planetário Hayden no Museu Americano de História Natural, ele herdou o legado de Carl Sagan, tornando o cosmos acessível a milhões através de sua carisma e didática únicas.
+                </p>
+
+                <p>
+                    Nascido no Bronx, Nova York, em 5 de outubro de 1958, Tyson cresceu em uma família de classe média. Seu pai, Cyril deGrasse Tyson, foi um sociólogo e comissionado de recreação humana de Nova York, enquanto sua mãe, Sunchita Maria Tyson, trabalhava como gerontóloga. Desde cedo, demonstrou uma curiosidade insaciável pelo universo, que seria despertada definitivamente durante uma visita ao Planetário Hayden do Museu Americano de História Natural aos 9 anos de idade.
+                </p>
+
+                <p>
+                    Aquela experiência transformadora o levou a estudar astrofísica, e ironicamente, décadas depois, ele se tornaria o diretor daquela mesma instituição que despertou sua paixão pelo cosmos. Aos 15 anos, já dava palestras sobre astronomia e havia sido descoberto por Carl Sagan, que tentou recrutá-lo para estudar em Cornell. Tyson, no entanto, optou por Harvard, buscando uma formação mais ampla.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Formação Acadêmica</span>
+                </div>
+
+                <p>
+                    Tyson graduou-se em Física pela Universidade Harvard em 1980, onde também foi capitão da equipe de wrestling e dançou ballet e jazz — uma combinação incomum que reflete sua versatilidade e disposição para desafiar estereótipos. Em Harvard, foi influenciado por professores renomados e começou a desenvolver sua habilidade de comunicação científica.
+                </p>
+
+                <p>
+                    Obteve seu mestrado em Astronomia pela Universidade do Texas em Austin em 1983, onde trabalhou com o astrônomo Gerard de Vaucouleurs estudando a morfologia de galáxias. Durante esse período, também enfrentou discriminação racial, o que o motivou a se tornar um defensor da diversidade na ciência.
+                </p>
+
+                <p>
+                    Em 1991, doutorou-se em Astrofísica pela Universidade Columbia, com uma tese sobre a estrutura galáctica e a distribuição de estrelas na Via Láctea. Sua pesquisa de pós-doutorado incluiu estudos sobre evolução estelar e formação de galáxias no Centro de Astrofísica Harvard-Smithsonian.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Carreira Científica</span>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1994</div>
+                        <div class="timeline-content">
+                            Tornado membro do corpo docente do Departamento de Astrofísica do Museu Americano de História Natural, onde começou a trabalhar em exposições e programas educacionais.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1996</div>
+                        <div class="timeline-content">
+                            Nomeado <strong>diretor do Planetário Hayden</strong>, tornando-se o cientista afro-americano mais jovem a dirigir uma instituição do museu. Liderou uma reforma completa de US$ 210 milhões, transformando o planetário em um centro de ciência de ponta.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">2001</div>
+                        <div class="timeline-content">
+                            Serviu na <strong>Comissão de Aeronáutica e Exploração Espacial dos EUA</strong> (Comissão Moon-Mars), ajudando a moldar a política espacial americana para as próximas décadas. Também foi nomeado para a Comissão de Implementação da Política Espacial dos EUA em 2004.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">2004</div>
+                        <div class="timeline-content">
+                            Recebeu a <strong>Medalha de Serviço Distinto da NASA</strong>, a mais alta honraria civil da agência espacial, por suas contribuições excepcionais à comunicação pública da ciência espacial.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">2006</div>
+                        <div class="timeline-content">
+                            Liderou a polêmica reclassificação de Plutão como planeta anão no Planetário Hayden, o que influenciou a União Astronômica Internacional a fazer o mesmo. A decisão gerou reações intensas do público, mas Tyson defendeu a importância da precisão científica.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">2009</div>
+                        <div class="timeline-content">
+                            Lançou o podcast <strong>StarTalk</strong>, combinando ciência, comédia e cultura pop. O programa se tornou um dos podcasts de ciência mais populares do mundo, com milhões de ouvintes mensais.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">2014</div>
+                        <div class="timeline-content">
+                            Apresentou a série <strong>Cosmos: Uma Odisséia do Espaço-Tempo</strong>, reboot do clássico de Carl Sagan de 1980. A série alcançou 135 milhões de espectadores em 181 países e foi transmitida pela Fox e National Geographic.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">2015</div>
+                        <div class="timeline-content">
+                            O programa <strong>StarTalk</strong> foi adaptado para televisão no National Geographic Channel, apresentando entrevistas com celebridades, cientistas e comediantes discutindo temas científicos.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">2020</div>
+                        <div class="timeline-content">
+                            Apresentou <strong>Cosmos: Mundos Possíveis</strong>, segunda temporada da série, explorando fronteiras ainda mais distantes do conhecimento científico e a busca por vida extraterrestre.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <span class="section-title">Contribuições Científicas</span>
+                </div>
+
+                <p>
+                    Embora seja mais conhecido como divulgador, Tyson manteve uma carreira de pesquisa ativa por décadas. Seu trabalho acadêmico focou-se em observações fotométricas e morfológicas de galáxias, evolução estelar e estrutura galáctica. Ele publicou dezenas de artigos científicos em revistas peer-reviewed.
+                </p>
+
+                <p>
+                    Como diretor do Planetário Hayden, Tyson supervisionou a criação de exposições inovadoras que combinavam ciência rigorosa com experiências imersivas. O novo planetário, reinaugurado em 2000, apresenta o sistema de projeção digital mais avançado do mundo, o Zeiss Mark IX.
+                </p>
+
+                <p>
+                    Tyson também foi fundamental na criação do <strong>Centro de Astrofísica da Divulgação</strong> no Museu Americano de História Natural, dedicado a treinar a próxima geração de comunicadores científicos. O centro oferece workshops, cursos e recursos para educadores.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Programas de TV e Mídia</span>
+                </div>
+
+                <p>
+                    A presença de Tyson na mídia começou cedo. De 2006 a 2011, apresentou o programa <strong>NOVA ScienceNow</strong> na PBS, tornando-se o rosto da ciência popular americana. Ele também fez incontáveis aparições em talk shows como <em>The Daily Show</em>, <em>The Colbert Report</em>, <em>Real Time with Bill Maher</em> e <em>The Late Show with Stephen Colbert</em>.
+                </p>
+
+                <p>
+                    Em 2014, sua versão de <strong>Cosmos</strong> foi um marco na televisão científica. Produzida por Seth MacFarlane e Ann Druyan (viúva de Carl Sagan), a série de 13 episódios custou US$ 100 milhões e foi transmitida em 181 países. Tyson apresentou desde o Big Bang até a possibilidade de vida em outros mundos, mantendo o espírito poético do original.
+                </p>
+
+                <p>
+                    Seu podcast <strong>StarTalk</strong> revolucionou a divulgação científica ao combinar astrofísica com comédia e cultura pop. Com co-apresentadores como o comediante Chuck Nice, Tyson entrevistou figuras diversas, de astronautas a músicos, tornando a ciência acessível através de analogias do cotidiano.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Obras Publicadas</span>
+                </div>
+
+                <div class="books-grid">
+                    <div class="book-card fade-up">
+                        <div class="book-year">1989</div>
+                        <div class="book-title">Universo: Um Guia do Mercado Espacial</div>
+                        <div class="book-desc">Primeiro livro, explorando o comércio espacial e o futuro da exploração.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">2000</div>
+                        <div class="book-title">Um Universo do Nada</div>
+                        <div class="book-desc">Reflexões sobre a origem do cosmos e o papel da humanidade.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">2007</div>
+                        <div class="book-title">Astrofísica para Apressados</div>
+                        <div class="book-desc">Guia conciso do universo em 12 capítulos. Best-seller do New York Times por mais de um ano.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">2012</div>
+                        <div class="book-title">Espaço: A Última Fronteira</div>
+                        <div class="book-desc">Exploração das fronteiras do conhecimento espacial e futuras missões.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">2017</div>
+                        <div class="book-title">Astrofísica para Apressados 2.0</div>
+                        <div class="book-desc">Atualização expandida com novas descobertas sobre buracos negros e ondas gravitacionais.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">2019</div>
+                        <div class="book-title">Cartas de um Astrofísico</div>
+                        <div class="book-desc">Reflexões sobre ciência, fé, política e a condição humana em formato de cartas.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">2021</div>
+                        <div class="book-title">Bem-vindos ao Universo</div>
+                        <div class="book-desc">Guia interativo para explorar o cosmos, baseado em seu curso universitário.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">2022</div>
+                        <div class="book-title">Starry Messenger</div>
+                        <div class="book-desc">Visões cósmicas sobre a civilização humana, ética e nosso lugar no universo.</div>
+                    </div>
+                </div>
+
+                <div class="quote-block fade-up">
+                    <p class="quote-text">
+                        O universo é dentro de nós. Somos feitos de átomos forjados no núcleo de estrelas que explodiram há bilhões de anos. Quando olhamos para o céu noturno, estamos olhando para nossa ancestralidade cósmica.
+                    </p>
+                    <div class="quote-author">— Neil deGrasse Tyson</div>
+                </div>
+
+                <div class="section-divider">
+                    <span class="section-title">Polêmicas e Debates Públicos</span>
+                </div>
+
+                <p>
+                    Tyson não teme polêmicas e frequentemente desafia o status quo. Em 2014, desencadeou debates acalorados ao questionar a utilidade científica da exploração tripulada de Marte, sugerindo que robôs seriam mais eficientes e seguros. A posição foi criticada por entusiastas da exploração espacial, mas Tyson defendeu que o dinheiro público deveria ser gasto de forma mais eficaz.
+                </p>
+
+                <p>
+                    Também criticou abertamente o filme <em>Gravidade</em> (2013) por suas imprecisões científicas, apontando que a Estação Espacial Internacional e o Telescópio Hubble orbitam em direções e altitudes diferentes, tornando impossível a viagem entre eles mostrada no filme. Em contrapartida, elogiou <em>Interestelar</em> (2014) por sua representação relativística dos buracos negros.
+                </p>
+
+                <p>
+                    Sua postura sobre religião e ciência é de agnosticismo prático: "Eu quero acreditar em um universo que não requer um deus. Mas isso não significa que não haja um." Essa posição moderada o colocou em debates com ateus militantes como Richard Dawkins e criacionistas igualmente. Tyson prefere o termo "espiritualidade científica" — o sentimento de admiração pelo cosmos que a ciência proporciona.
+                </p>
+
+                <p>
+                    Em 2018, enfrentou acusações de conduta sexual inadequada de três mulheres. Tyson negou as acusações de assédio, admitindo apenas comportamento desajeitado. Após investigação interna do Museu Americano de História Natural e da Fox, foi absolvido e manteve seus cargos. O caso gerou debates sobre justiça e reputação na era digital.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Prêmios e Honrarias</span>
+                </div>
+
+                <p>
+                    Ao longo de sua carreira, Tyson acumulou reconhecimentos significativos. Em 2001, a International Astronomical Union homenageou-o batizando o asteroide <strong>13123 Tyson</strong> em sua honra. Recebeu a Medalha de Serviço Distinto da NASA em 2004 e o Prêmio Public Service da National Science Foundation em 2015.
+                </p>
+
+                <p>
+                    Em 2017, foi indicado ao Emmy como produtor executivo de <em>Cosmos: Uma Odisséia do Espaço-Tempo</em>. Recebeu doutorados honorários de várias universidades, incluindo Yale, Penn State e University of Massachusetts. Em 2020, foi eleito membro da American Academy of Arts and Sciences.
+                </p>
+
+                <p>
+                    A revista <em>Time</em> incluiu-o na lista das 100 pessoas mais influentes do mundo em 2007. Foi nomeado "Sexiest Astrophysicist Alive" pela revista <em>People</em> em 2000, título que ele frequentemente menciona com humor em suas palestras.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Vida Pessoal</span>
+                </div>
+
+                <p>
+                    Tyson casou-se com Alice Young em 1988, que conheceu em uma aula de física na Universidade do Texas. Têm dois filhos, Miranda e Travis. A família reside em Lower Manhattan, perto do Museu Americano de História Natural, onde Tyson passa grande parte de seu tempo.
+                </p>
+
+                <p>
+                    Além da ciência, Tyson é um ávido colecionador de vinhos, entusiasta de gastronomia e praticante de dança. Durante seus anos em Harvard, dançou ballet e jazz, e até hoje defende a importância das artes para uma educação completa. Também é fã de ficção científica, especialmente de <em>Star Trek</em>, e fez aparições em várias séries de TV, incluindo <em>The Big Bang Theory</em> e <em>Stargate: Atlantis</em>.
+                </p>
+
+                <p>
+                    Tyson é conhecido por seu senso de humor afiado e capacidade de desmistificar conceitos complexos. Suas analogias populares incluem comparar o átomo a uma catedral vazia (com o núcleo sendo uma mosca no centro) e explicar que há mais estrelas no universo do que grãos de areia em todas as praias da Terra.
+                </p>
+
+                <div class="legacy-box fade-up">
+                    <div class="legacy-icon">✦</div>
+                    <h3 class="legacy-title">O Legado Vivo</h3>
+                    <p class="legacy-text">
+                        Aos 66 anos, Neil deGrasse Tyson continua ativo como diretor do Planetário Hayden, apresentador do podcast StarTalk e defensor incansável da educação científica. Com mais de 14 milhões de seguidores nas redes sociais, ele alcança uma audiência que Sagan jamais imaginou possível.
+                    </p>
+                    <p class="legacy-text" style="margin-top: 15px;">
+                        Seu trabalho inspirou uma nova geração de cientistas, provando que a curiosidade pelo cosmos não tem idade, cor ou fronteiras. Como ele mesmo diz: <em>"Somos a maneira do universo se conhecer. Isso nos torna importantes, mesmo que sejamos pequenos."</em>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <nav class="article-nav">
+            <a href="CarlSagan.html" class="nav-btn prev">
+                <div>
+                    <div class="nav-label">← Anterior</div>
+                    <div class="nav-title">Carl Sagan</div>
+                </div>
+            </a>
+            <a href="#" class="nav-btn next">
+                <div style="text-align: right;">
+                    <div class="nav-label">Próximo →</div>
+                    <div class="nav-title">Próxima Biografia</div>
+                </div>
+            </a>
+        </nav>
+    </main>
+
+    <footer>
+        <p class="footer-text">StarCosmiC © 2026 - Além do Planeta Terra</p>
+    </footer>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

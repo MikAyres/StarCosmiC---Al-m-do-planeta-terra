@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principais Cientistas - StarCosmiC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@200;300;400;500;600;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --bg-light: #0d3a5c;
+            --text-primary: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-gold: #d4af37;
+            --accent-blue: #4a90e2;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.7), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.4;
+            animation: twinkle 8s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 25, 40, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 200px;
+            height: 47px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-desktop { 
+            opacity: 1;
+            z-index: 2;
+        }
+        .logo-mobile { 
+            opacity: 0;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 47px;
+                height: 47px;
+            }
+            
+            .logo-desktop { 
+                opacity: 0;
+            }
+            .logo-mobile { 
+                opacity: 1;
+            }
+        }
+
+        .back-btn {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            transition: all 0.3s;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .page-label {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--accent-gold);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #fff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Scientists Grid */
+        .scientists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        /* Scientist Card */
+        .scientist-card {
+            background: rgba(8, 38, 60, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .scientist-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .scientist-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .scientist-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            object-position: center top;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.4s ease;
+        }
+
+        .scientist-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-era {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            margin-bottom: 8px;
+        }
+
+        .card-name {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .card-description {
+            font-family: 'Crimson Text', serif;
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .card-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card-stat {
+            text-align: center;
+        }
+
+        .card-stat-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+
+        .card-stat-value {
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .card-arrow {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-size: 18px;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .scientist-card:hover .card-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Featured Section */
+        .featured-section {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        .featured-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .featured-title {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .featured-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 17px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.9);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+
+        .quote-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 24px;
+            font-style: italic;
+            line-height: 1.5;
+            color: white;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .quote-text::before,
+        .quote-text::after {
+            content: '"';
+            font-size: 60px;
+            color: rgba(212, 175, 55, 0.2);
+            font-family: 'Cinzel', serif;
+            line-height: 0;
+            vertical-align: middle;
+        }
+
+        .quote-author {
+            font-size: 13px;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #020d14, transparent);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .scientists-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card-image {
+                height: 240px;
+            }
+
+            .featured-section {
+                padding: 25px;
+            }
+
+            .quote-text {
+                font-size: 20px;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="stars"></div>
+
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../Images/Logo-StarCosmiC.png" alt="StarCosmiC" class="logo-desktop">
+                    <img src="../Images/LogoMobile.png" alt="StarCosmiC" class="logo-mobile">
+                </div>
+            </a>
+            <a href="../index.html" class="back-btn">
+                ← Voltar
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <span class="page-label">Galeria</span>
+            <h1>Principais Cientistas</h1>
+            <p class="page-subtitle">
+                Conheça as mentes brilhantes que desvendaram os mistérios do cosmos e expandiram os limites do conhecimento humano
+            </p>
+        </div>
+
+        <div class="scientists-grid">
+            <!-- Isaac Newton -->
+            <a href="/Biografias/Newton.html" class="scientist-card fade-up">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Portrait_of_Sir_Isaac_Newton%2C_1689.jpg" alt="Isaac Newton" class="card-image">
+                <div class="card-content">
+                    <div class="card-era">Século XVII-XVIII</div>
+                    <h2 class="card-name">Sir Isaac Newton</h2>
+                    <p class="card-subtitle">"O último bruxo, o primeiro cientista moderno"</p>
+                    <p class="card-description">
+                        Revolucionou a física com as Leis do Movimento e a Gravitação Universal. Seu "Principia Mathematica" estabeleceu as bases da ciência moderna por mais de 200 anos.
+                    </p>
+                    <div class="card-stats">
+                        <div class="card-stat">
+                            <div class="card-stat-label">Nascimento</div>
+                            <div class="card-stat-value">1643</div>
+                        </div>
+                        <div class="card-stat">
+                            <div class="card-stat-label">Obra-prima</div>
+                            <div class="card-stat-value">Principia</div>
+                        </div>
+                        <div class="card-stat">
+                            <div class="card-stat-label">Legado</div>
+                            <div class="card-stat-value">Física Clássica</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <!-- Carl Sagan -->
+            <a href="/Biografias/CarlSagan.html" class="scientist-card fade-up">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/be/Carl_Sagan_Planetary_Society.JPG" alt="Carl Sagan" class="card-image">
+                <div class="card-content">
+                    <div class="card-era">Século XX</div>
+                    <h2 class="card-name">Carl Sagan</h2>
+                    <p class="card-subtitle">"O poeta do cosmos e voz da Terra no espaço"</p>
+                    <p class="card-description">
+                        Astrônomo e divulgador científico que tornou a astronomia acessível a milhões. Criador da série "Cosmos" e defensor da busca por vida extraterrestre inteligente.
+                    </p>
+                    <div class="card-stats">
+                        <div class="card-stat">
+                            <div class="card-stat-label">Nascimento</div>
+                            <div class="card-stat-value">1934</div>
+                        </div>
+                        <div class="card-stat">
+                            <div class="card-stat-label">Obra-prima</div>
+                            <div class="card-stat-value">Cosmos</div>
+                        </div>
+                        <div class="card-stat">
+                            <div class="card-stat-label">Legado</div>
+                            <div class="card-stat-value">Divulgação</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <!-- Stephen Hawking -->
+            <a href="/Biografias/StephenHawking.html" class="scientist-card fade-up">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Stephen_Hawking.StarChild.jpg" alt="Stephen Hawking" class="card-image">
+                <div class="card-content">
+                    <div class="card-era">Século XX-XXI</div>
+                    <h2 class="card-name">Stephen Hawking</h2>
+                    <p class="card-subtitle">"A mente mais brilhante confinada em um corpo aprisionado"</p>
+                    <p class="card-description">
+                        Revolucionou a cosmologia com a descoberta da radiação dos buracos negros. Autor de "Uma Breve História do Tempo", vendeu 25 milhões de cópias mundialmente.
+                    </p>
+                    <div class="card-stats">
+                        <div class="card-stat">
+                            <div class="card-stat-label">Nascimento</div>
+                            <div class="card-stat-value">1942</div>
+                        </div>
+                        <div class="card-stat">
+                            <div class="card-stat-label">Obra-prima</div>
+                            <div class="card-stat-value">Breve História</div>
+                        </div>
+                        <div class="card-stat">
+                            <div class="card-stat-label">Legado</div>
+                            <div class="card-stat-value">Cosmologia</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
+            <!-- Neil deGrasse Tyson -->
+            <a href="/Biografias/Tyson.html" class="scientist-card fade-up">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Tyson_-_Apollo_40th_anniversary_2009.jpg" alt="Neil deGrasse Tyson" class="card-image">
+                <div class="card-content">
+                    <div class="card-era">Século XXI</div>
+                    <h2 class="card-name">Neil deGrasse Tyson</h2>
+                    <p class="card-subtitle">"O herdeiro de Sagan na divulgação científica moderna"</p>
+                    <p class="card-description">
+                        Astrofísico e diretor do Planetário Hayden em Nova York. Host do remake de "Cosmos" e uma das principais vozes da ciência na cultura pop contemporânea.
+                    </p>
+                    <div class="card-stats">
+                        <div class="card-stat">
+                            <div class="card-stat-label">Nascimento</div>
+                            <div class="card-stat-value">1958</div>
+                        </div>
+                        <div class="card-stat">
+                            <div class="card-stat-label">Obra-prima</div>
+                            <div class="card-stat-value">Astrofísica</div>
+                        </div>
+                        <div class="card-stat">
+                            <div class="card-stat-label">Legado</div>
+                            <div class="card-stat-value">Inspiração</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+        </div>
+
+        <div class="featured-section fade-up">
+            <div class="featured-icon">✦</div>
+            <h3 class="featured-title">Uma Linhagem de Gênios</h3>
+            <p class="featured-text">
+                De Newton a Tyson, passando por Sagan e Hawking, estas quatro mentes representam mais de 350 anos de busca pelo conhecimento cósmico. Cada um, à sua maneira, expandiu nossa compreensão do universo e inspirou gerações a olhar para as estrelas com curiosidade e admiração.
+            </p>
+        </div>
+
+        <div class="quote-section fade-up">
+            <p class="quote-text">
+                A matemática é a linguagem na qual Deus escreveu o universo
+            </p>
+            <div class="quote-author">— Galileu Galilei</div>
+        </div>
+    </main>
+
+    <footer>
+        <p class="footer-text">StarCosmiC © 2026 - Além do Planeta Terra</p>
+    </footer>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
