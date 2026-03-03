@@ -163,6 +163,54 @@
             border-color: rgba(255,255,255,0.3);
         }
 
+        /* ABA DE FAVORITOS - APARECE QUANDO TEM FAVORITOS */
+        .favorites-tab {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%);
+            z-index: 999;
+            background: rgba(212, 175, 55, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 25px;
+            border-radius: 0 0 20px 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--bg-primary);
+            text-decoration: none;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .favorites-tab.visible {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .favorites-tab:hover {
+            box-shadow: 0 6px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .favorites-tab .star-icon {
+            font-size: 16px;
+        }
+
+        .favorites-tab .count {
+            background: var(--bg-primary);
+            color: var(--accent-gold);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
         /* Main Content */
         main {
             position: relative;
@@ -234,6 +282,8 @@
             flex-direction: column;
             text-decoration: none;
             color: inherit;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .scientist-card::before {
@@ -258,6 +308,27 @@
             transform: scaleX(1);
         }
 
+        .scientist-card.favorited {
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .scientist-card.favorited::after {
+            content: '⭐';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            animation: starPop 0.3s ease;
+        }
+
+        @keyframes starPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
         .card-image {
             width: 100%;
             height: 280px;
@@ -265,6 +336,7 @@
             object-position: center top;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             transition: transform 0.4s ease;
+            pointer-events: none;
         }
 
         .scientist-card:hover .card-image {
@@ -276,6 +348,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            pointer-events: none;
         }
 
         .card-era {
@@ -355,6 +428,7 @@
             transition: all 0.3s;
             opacity: 0;
             transform: translateX(-10px);
+            pointer-events: none;
         }
 
         .scientist-card:hover .card-arrow {
@@ -362,69 +436,50 @@
             transform: translateX(0);
         }
 
-        /* Featured Section */
-        .featured-section {
-            background: rgba(212, 175, 55, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 50px;
-            text-align: center;
+        /* Context Menu */
+        .context-menu {
+            position: fixed;
+            background: rgba(8, 38, 60, 0.98);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            padding: 8px 0;
+            min-width: 150px;
+            z-index: 10000;
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
-        .featured-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
+        .context-menu.visible {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: all;
         }
 
-        .featured-title {
-            font-family: 'Cinzel', serif;
-            font-size: 24px;
-            color: var(--accent-gold);
-            margin-bottom: 15px;
-        }
-
-        .featured-text {
-            font-family: 'Crimson Text', serif;
-            font-size: 17px;
-            line-height: 1.7;
-            color: rgba(255,255,255,0.9);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        /* Quote Section */
-        .quote-section {
-            text-align: center;
-            padding: 40px 20px;
-            margin-bottom: 30px;
-        }
-
-        .quote-text {
-            font-family: 'Crimson Text', serif;
-            font-size: 24px;
-            font-style: italic;
-            line-height: 1.5;
-            color: white;
-            max-width: 700px;
-            margin: 0 auto 20px;
-            position: relative;
-        }
-
-        .quote-text::before,
-        .quote-text::after {
-            content: '"';
-            font-size: 60px;
-            color: rgba(212, 175, 55, 0.2);
-            font-family: 'Cinzel', serif;
-            line-height: 0;
-            vertical-align: middle;
-        }
-
-        .quote-author {
+        .context-menu-item {
+            padding: 10px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             font-size: 13px;
+            color: white;
+            transition: background 0.2s;
+        }
+
+        .context-menu-item:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .context-menu-item.star-icon {
             color: var(--accent-gold);
-            letter-spacing: 2px;
+        }
+
+        .context-menu-item.remove-icon {
+            color: #ff6b6b;
         }
 
         /* Footer */
@@ -457,12 +512,9 @@
                 height: 240px;
             }
 
-            .featured-section {
-                padding: 25px;
-            }
-
-            .quote-text {
-                font-size: 20px;
+            .favorites-tab {
+                padding: 8px 20px;
+                font-size: 12px;
             }
         }
 
@@ -484,6 +536,21 @@
     <div class="cosmic-bg"></div>
     <div class="stars"></div>
 
+    <!-- ABA DE FAVORITOS -->
+    <a href="favoritos.html" class="favorites-tab" id="favoritesTab">
+        <span class="star-icon">⭐</span>
+        <span>Cientistas Favoritados</span>
+        <span class="count" id="favoritesCount">0</span>
+    </a>
+
+    <!-- CONTEXT MENU (inicialmente oculto) -->
+    <div class="context-menu" id="contextMenu">
+        <div class="context-menu-item" id="menuItem">
+            <span id="menuIcon">⭐</span>
+            <span id="menuText">Favoritar</span>
+        </div>
+    </div>
+
     <header>
         <div class="header-container">
             <a href="../index.html" class="logo">
@@ -503,20 +570,49 @@
             <span class="page-label">Galeria</span>
             <h1>Principais Cientistas</h1>
             <p class="page-subtitle">
-                Conheça as mentes brilhantes que desvendaram os mistérios do cosmos e expandiram os limites do conhecimento humano
+                Clique com o botão direito (ou pressione e segure no mobile) para favoritar seus cientistas preferidos
             </p>
         </div>
 
-        <div class="scientists-grid">
+        <div class="scientists-grid" id="scientistsGrid">
+            
+            <!-- Galileu Galilei -->
+            <a href="../Biografias/GalileuGalilei.html" class="scientist-card fade-up" data-id="galileu" data-name="Galileu Galilei">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg" alt="Galileu Galilei" class="card-image">
+                <div class="card-content">
+                    <div class="card-era">Século XVI-XVII</div>
+                    <h2 class="card-name">Galileu Galilei</h2>
+                    <p class="card-subtitle">"O pai da ciência moderna e da astronomia observacional"</p>
+                    <p class="card-description">
+                        Revolucionou nossa compreensão do cosmos com suas observações telescópicas. Descobriu as luas de Júpiter, as fases de Vênus e desafiou a Igreja defendendo o heliocentrismo.
+                    </p>
+                    <div class="card-stats">
+                        <div class="card-stat">
+                            <div class="card-stat-label">Nascimento</div>
+                            <div class="card-stat-value">1564</div>
+                        </div>
+                        <div class="card-stat">
+                            <div class="card-stat-label">Obra-prima</div>
+                            <div class="card-stat-value">Sidereus Nuncius</div>
+                        </div>
+                        <div class="card-stat">
+                            <div class="card-stat-label">Legado</div>
+                            <div class="card-stat-value">Astronomia</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-arrow">→</div>
+            </a>
+
             <!-- Isaac Newton -->
-            <a href="../Biografias/Newton.html" class="scientist-card fade-up">
+            <a href="../Biografias/Newton.html" class="scientist-card fade-up" data-id="newton" data-name="Isaac Newton">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Portrait_of_Sir_Isaac_Newton%2C_1689.jpg" alt="Isaac Newton" class="card-image">
                 <div class="card-content">
                     <div class="card-era">Século XVII-XVIII</div>
                     <h2 class="card-name">Sir Isaac Newton</h2>
                     <p class="card-subtitle">"O último bruxo, o primeiro cientista moderno"</p>
                     <p class="card-description">
-                        Revolucionou a física com as Leis do Movimento e a Gravitação Universal. Seu "Principia Mathematica" estabeleceu as bases da ciência moderna por mais de 200 anos.
+                        Revolucionou a física com as Leis do Movimento e a Gravitação Universal. Seu "Principia Mathematica" estabeleceu as bases da ciência moderna.
                     </p>
                     <div class="card-stats">
                         <div class="card-stat">
@@ -529,7 +625,7 @@
                         </div>
                         <div class="card-stat">
                             <div class="card-stat-label">Legado</div>
-                            <div class="card-stat-value">Física Clássica</div>
+                            <div class="card-stat-value">Física</div>
                         </div>
                     </div>
                 </div>
@@ -537,14 +633,14 @@
             </a>
 
             <!-- Carl Sagan -->
-            <a href="../Biografias/CarlSagan.html" class="scientist-card fade-up">
+            <a href="../Biografias/CarlSagan.html" class="scientist-card fade-up" data-id="sagan" data-name="Carl Sagan">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/be/Carl_Sagan_Planetary_Society.JPG" alt="Carl Sagan" class="card-image">
                 <div class="card-content">
                     <div class="card-era">Século XX</div>
                     <h2 class="card-name">Carl Sagan</h2>
                     <p class="card-subtitle">"O poeta do cosmos e voz da Terra no espaço"</p>
                     <p class="card-description">
-                        Astrônomo e divulgador científico que tornou a astronomia acessível a milhões. Criador da série "Cosmos" e defensor da busca por vida extraterrestre inteligente.
+                        Astrônomo e divulgador científico que tornou a astronomia acessível a milhões. Criador da série "Cosmos" e defensor da busca por vida extraterrestre.
                     </p>
                     <div class="card-stats">
                         <div class="card-stat">
@@ -565,14 +661,14 @@
             </a>
 
             <!-- Stephen Hawking -->
-            <a href="../Biografias/StephenHawking.html" class="scientist-card fade-up">
+            <a href="../Biografias/StephenHawking.html" class="scientist-card fade-up" data-id="hawking" data-name="Stephen Hawking">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/e/eb/Stephen_Hawking.StarChild.jpg" alt="Stephen Hawking" class="card-image">
                 <div class="card-content">
                     <div class="card-era">Século XX-XXI</div>
                     <h2 class="card-name">Stephen Hawking</h2>
                     <p class="card-subtitle">"A mente mais brilhante confinada em um corpo aprisionado"</p>
                     <p class="card-description">
-                        Revolucionou a cosmologia com a descoberta da radiação dos buracos negros. Autor de "Uma Breve História do Tempo", vendeu 25 milhões de cópias mundialmente.
+                        Revolucionou a cosmologia com a descoberta da radiação dos buracos negros. Autor de "Uma Breve História do Tempo", best-seller mundial.
                     </p>
                     <div class="card-stats">
                         <div class="card-stat">
@@ -593,14 +689,14 @@
             </a>
 
             <!-- Neil deGrasse Tyson -->
-            <a href="../Biografias/Tyson.html" class="scientist-card fade-up">
+            <a href="../Biografias/Tyson.html" class="scientist-card fade-up" data-id="tyson" data-name="Neil deGrasse Tyson">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Tyson_-_Apollo_40th_anniversary_2009.jpg" alt="Neil deGrasse Tyson" class="card-image">
                 <div class="card-content">
                     <div class="card-era">Século XXI</div>
                     <h2 class="card-name">Neil deGrasse Tyson</h2>
                     <p class="card-subtitle">"O herdeiro de Sagan na divulgação científica moderna"</p>
                     <p class="card-description">
-                        Astrofísico e diretor do Planetário Hayden em Nova York. Host do remake de "Cosmos" e uma das principais vozes da ciência na cultura pop contemporânea.
+                        Astrofísico e diretor do Planetário Hayden. Host do remake de "Cosmos" e uma das principais vozes da ciência na cultura pop contemporânea.
                     </p>
                     <div class="card-stats">
                         <div class="card-stat">
@@ -620,21 +716,6 @@
                 <div class="card-arrow">→</div>
             </a>
         </div>
-
-        <div class="featured-section fade-up">
-            <div class="featured-icon">✦</div>
-            <h3 class="featured-title">Uma Linhagem de Gênios</h3>
-            <p class="featured-text">
-                De Newton a Tyson, passando por Sagan e Hawking, estas quatro mentes representam mais de 350 anos de busca pelo conhecimento cósmico. Cada um, à sua maneira, expandiu nossa compreensão do universo e inspirou gerações a olhar para as estrelas com curiosidade e admiração.
-            </p>
-        </div>
-
-        <div class="quote-section fade-up">
-            <p class="quote-text">
-                A matemática é a linguagem na qual Deus escreveu o universo
-            </p>
-            <div class="quote-author">— Galileu Galilei</div>
-        </div>
     </main>
 
     <footer>
@@ -642,6 +723,132 @@
     </footer>
 
     <script>
+        // Sistema de Favoritos
+        const FAVORITES_KEY = 'starcosmic_favorites';
+        let favorites = JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
+        let currentCard = null;
+
+        // Elementos DOM
+        const contextMenu = document.getElementById('contextMenu');
+        const menuItem = document.getElementById('menuItem');
+        const menuIcon = document.getElementById('menuIcon');
+        const menuText = document.getElementById('menuText');
+        const favoritesTab = document.getElementById('favoritesTab');
+        const favoritesCount = document.getElementById('favoritesCount');
+        const cards = document.querySelectorAll('.scientist-card');
+
+        // Atualizar UI de favoritos
+        function updateFavoritesUI() {
+            // Atualizar contador
+            favoritesCount.textContent = favorites.length;
+            
+            // Mostrar/esconder aba
+            if (favorites.length > 0) {
+                favoritesTab.classList.add('visible');
+            } else {
+                favoritesTab.classList.remove('visible');
+            }
+            
+            // Atualizar cards
+            cards.forEach(card => {
+                const id = card.dataset.id;
+                if (favorites.includes(id)) {
+                    card.classList.add('favorited');
+                } else {
+                    card.classList.remove('favorited');
+                }
+            });
+        }
+
+        // Toggle favorito
+        function toggleFavorite(id) {
+            const index = favorites.indexOf(id);
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(id);
+            }
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+            updateFavoritesUI();
+        }
+
+        // Mostrar menu de contexto
+        function showContextMenu(e, card) {
+            e.preventDefault();
+            currentCard = card;
+            const id = card.dataset.id;
+            const isFavorited = favorites.includes(id);
+            
+            // Configurar menu
+            if (isFavorited) {
+                menuIcon.textContent = '❌';
+                menuText.textContent = 'Remover dos favoritos';
+                menuItem.classList.remove('star-icon');
+                menuItem.classList.add('remove-icon');
+            } else {
+                menuIcon.textContent = '⭐';
+                menuText.textContent = 'Favoritar';
+                menuItem.classList.remove('remove-icon');
+                menuItem.classList.add('star-icon');
+            }
+            
+            // Posicionar menu
+            const x = e.clientX || e.touches[0].clientX;
+            const y = e.clientY || e.touches[0].clientY;
+            
+            contextMenu.style.left = x + 'px';
+            contextMenu.style.top = y + 'px';
+            contextMenu.classList.add('visible');
+        }
+
+        // Esconder menu
+        function hideContextMenu() {
+            contextMenu.classList.remove('visible');
+            currentCard = null;
+        }
+
+        // Event Listeners para Desktop (clique direito)
+        cards.forEach(card => {
+            card.addEventListener('contextmenu', (e) => {
+                showContextMenu(e, card);
+            });
+        });
+
+        // Event Listeners para Mobile (long press)
+        let longPressTimer;
+        cards.forEach(card => {
+            card.addEventListener('touchstart', (e) => {
+                longPressTimer = setTimeout(() => {
+                    showContextMenu(e, card);
+                }, 800); // 800ms para long press
+            });
+            
+            card.addEventListener('touchend', () => {
+                clearTimeout(longPressTimer);
+            });
+            
+            card.addEventListener('touchmove', () => {
+                clearTimeout(longPressTimer);
+            });
+        });
+
+        // Clique no item do menu
+        menuItem.addEventListener('click', () => {
+            if (currentCard) {
+                const id = currentCard.dataset.id;
+                toggleFavorite(id);
+                hideContextMenu();
+            }
+        });
+
+        // Fechar menu ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!contextMenu.contains(e.target)) {
+                hideContextMenu();
+            }
+        });
+
+        // Animação de entrada
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -658,6 +865,9 @@
         document.querySelectorAll('.fade-up').forEach(el => {
             observer.observe(el);
         });
+
+        // Inicializar
+        updateFavoritesUI();
     </script>
 </body>
 </html>

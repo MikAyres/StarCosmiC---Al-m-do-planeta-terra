@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cientistas Favoritados - StarCosmiC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@200;300;400;500;600;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --bg-light: #0d3a5c;
+            --text-primary: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-gold: #d4af37;
+            --accent-blue: #4a90e2;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.7), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.4;
+            animation: twinkle 8s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 25, 40, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 200px;
+            height: 47px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-desktop { 
+            opacity: 1;
+            z-index: 2;
+        }
+        .logo-mobile { 
+            opacity: 0;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 47px;
+                height: 47px;
+            }
+            
+            .logo-desktop { 
+                opacity: 0;
+            }
+            .logo-mobile { 
+                opacity: 1;
+            }
+        }
+
+        .back-btn {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            transition: all 0.3s;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 60vh;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .page-label {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--accent-gold);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #fff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-title {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .empty-text {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 400px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
+        }
+
+        .empty-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .empty-btn:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Scientists Grid */
+        .scientists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        /* Scientist Card */
+        .scientist-card {
+            background: rgba(8, 38, 60, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scientist-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-gold), transparent);
+        }
+
+        .scientist-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 107, 107, 0.9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            transition: all 0.3s;
+            z-index: 10;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .scientist-card:hover .remove-btn {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .remove-btn:hover {
+            background: #ff5252;
+            transform: scale(1.1);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            object-position: center top;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.4s ease;
+        }
+
+        .scientist-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-era {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-gold);
+            margin-bottom: 8px;
+        }
+
+        .card-name {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+
+        .card-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .card-description {
+            font-family: 'Crimson Text', serif;
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .card-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .card-stat {
+            text-align: center;
+        }
+
+        .card-stat-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 3px;
+        }
+
+        .card-stat-value {
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .card-arrow {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-gold);
+            font-size: 18px;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        .scientist-card:hover .card-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .summary-text {
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+        }
+
+        .summary-count {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #020d14, transparent);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .scientists-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card-image {
+                height: 240px;
+            }
+
+            .remove-btn {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            .empty-state {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="stars"></div>
+
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../Images/Logo-StarCosmiC.png" alt="StarCosmiC" class="logo-desktop">
+                    <img src="../Images/LogoMobile.png" alt="StarCosmiC" class="logo-mobile">
+                </div>
+            </a>
+            <a href="../Pages/Cientistas.html"back-btn">
+                ← Ver todos
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <span class="page-label">Meus Favoritos</span>
+            <h1>Cientistas Favoritados</h1>
+            <p class="page-subtitle">
+                Sua coleção pessoal de mentes brilhantes que moldaram nossa compreensão do universo
+            </p>
+        </div>
+
+        <div id="favoritesContainer">
+            <!-- Conteúdo será preenchido via JavaScript -->
+        </div>
+    </main>
+
+    <footer>
+        <p class="footer-text">StarCosmiC © 2026 - Além do Planeta Terra</p>
+    </footer>
+
+    <script>
+        // Dados dos cientistas (mesmos da página principal)
+        const scientistsData = {
+            galileu: {
+                id: 'galileu',
+                name: 'Galileu Galilei',
+                era: 'Século XVI-XVII',
+                subtitle: '"O pai da ciência moderna e da astronomia observacional"',
+                description: 'Revolucionou nossa compreensão do cosmos com suas observações telescópicas. Descobriu as luas de Júpiter, as fases de Vênus e desafiou a Igreja defendendo o heliocentrismo.',
+                image: 'https://upload.wikimedia.org/wikipedia/commons/d/d4/Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg',
+                birth: '1564',
+                masterpiece: 'Sidereus Nuncius',
+                legacy: 'Astronomia',
+                link: '../Biografias/GalileuGalilei.html'
+            },
+            newton: {
+                id: 'newton',
+                name: 'Sir Isaac Newton',
+                era: 'Século XVII-XVIII',
+                subtitle: '"O último bruxo, o primeiro cientista moderno"',
+                description: 'Revolucionou a física com as Leis do Movimento e a Gravitação Universal. Seu "Principia Mathematica" estabeleceu as bases da ciência moderna.',
+                image: 'https://upload.wikimedia.org/wikipedia/commons/3/3b/Portrait_of_Sir_Isaac_Newton%2C_1689.jpg',
+                birth: '1643',
+                masterpiece: 'Principia',
+                legacy: 'Física',
+                link: '../Biografias/Newton.html'
+            },
+            sagan: {
+                id: 'sagan',
+                name: 'Carl Sagan',
+                era: 'Século XX',
+                subtitle: '"O poeta do cosmos e voz da Terra no espaço"',
+                description: 'Astrônomo e divulgador científico que tornou a astronomia acessível a milhões. Criador da série "Cosmos" e defensor da busca por vida extraterrestre.',
+                image: 'https://upload.wikimedia.org/wikipedia/commons/b/be/Carl_Sagan_Planetary_Society.JPG',
+                birth: '1934',
+                masterpiece: 'Cosmos',
+                legacy: 'Divulgação',
+                link: '../Biografias/CarlSagan.html'
+            },
+            hawking: {
+                id: 'hawking',
+                name: 'Stephen Hawking',
+                era: 'Século XX-XXI',
+                subtitle: '"A mente mais brilhante confinada em um corpo aprisionado"',
+                description: 'Revolucionou a cosmologia com a descoberta da radiação dos buracos negros. Autor de "Uma Breve História do Tempo", best-seller mundial.',
+                image: 'https://upload.wikimedia.org/wikipedia/commons/e/eb/Stephen_Hawking.StarChild.jpg',
+                birth: '1942',
+                masterpiece: 'Breve História',
+                legacy: 'Cosmologia',
+                link: '../Biografias/StephenHawking.html'
+            },
+            tyson: {
+                id: 'tyson',
+                name: 'Neil deGrasse Tyson',
+                era: 'Século XXI',
+                subtitle: '"O herdeiro de Sagan na divulgação científica moderna"',
+                description: 'Astrofísico e diretor do Planetário Hayden. Host do remake de "Cosmos" e uma das principais vozes da ciência na cultura pop contemporânea.',
+                image: 'https://upload.wikimedia.org/wikipedia/commons/f/f7/Tyson_-_Apollo_40th_anniversary_2009.jpg',
+                birth: '1958',
+                masterpiece: 'Astrofísica',
+                legacy: 'Inspiração',
+                link: '../Biografias/Tyson.html'
+            }
+        };
+
+        const FAVORITES_KEY = 'starcosmic_favorites';
+        const container = document.getElementById('favoritesContainer');
+
+        function getFavorites() {
+            return JSON.parse(localStorage.getItem(FAVORITES_KEY)) || [];
+        }
+
+        function removeFavorite(id) {
+            let favorites = getFavorites();
+            favorites = favorites.filter(fav => fav !== id);
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+            renderFavorites();
+        }
+
+        function renderFavorites() {
+            const favorites = getFavorites();
+            
+            if (favorites.length === 0) {
+                // Estado vazio
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">⭐</div>
+                        <h2 class="empty-title">Nenhum cientista favoritado</h2>
+                        <p class="empty-text">
+                            Você ainda não adicionou nenhum cientista aos favoritos. 
+                            Volte para a galeria e clique com o botão direito (ou pressione e segure no mobile) para favoritar.
+                        </p>
+                        <a href="Cientistas.html" class="empty-btn">
+                            ← Ver todos os cientistas
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            // Renderizar grid de favoritos
+            let html = '<div class="scientists-grid">';
+            
+            favorites.forEach((id, index) => {
+                const scientist = scientistsData[id];
+                if (scientist) {
+                    html += `
+                        <div class="scientist-card" style="animation-delay: ${index * 0.1}s">
+                            <button class="remove-btn" onclick="removeFavorite('${id}')" title="Remover dos favoritos">
+                                ✕
+                            </button>
+                            <a href="${scientist.link}" style="text-decoration: none; color: inherit;">
+                                <img src="${scientist.image}" alt="${scientist.name}" class="card-image">
+                                <div class="card-content">
+                                    <div class="card-era">${scientist.era}</div>
+                                    <h2 class="card-name">${scientist.name}</h2>
+                                    <p class="card-subtitle">${scientist.subtitle}</p>
+                                    <p class="card-description">${scientist.description}</p>
+                                    <div class="card-stats">
+                                        <div class="card-stat">
+                                            <div class="card-stat-label">Nascimento</div>
+                                            <div class="card-stat-value">${scientist.birth}</div>
+                                        </div>
+                                        <div class="card-stat">
+                                            <div class="card-stat-label">Obra-prima</div>
+                                            <div class="card-stat-value">${scientist.masterpiece}</div>
+                                        </div>
+                                        <div class="card-stat">
+                                            <div class="card-stat-label">Legado</div>
+                                            <div class="card-stat-value">${scientist.legacy}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-arrow">→</div>
+                            </a>
+                        </div>
+                    `;
+                }
+            });
+            
+            html += '</div>';
+            
+            // Resumo
+            html += `
+                <div class="summary-section">
+                    <p class="summary-text">
+                        Você tem <span class="summary-count">${favorites.length} cientista${favorites.length > 1 ? 's' : ''}</span> 
+                        favoritado${favorites.length > 1 ? 's' : ''}. Continue explorando e adicionando mais mentes brilhantes à sua coleção!
+                    </p>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+        }
+
+        // Renderizar ao carregar
+        renderFavorites();
+
+        // Atualizar quando voltar da página anterior
+        window.addEventListener('focus', renderFavorites);
+    </script>
+</body>
+</html>

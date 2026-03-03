@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galileu Galilei - StarCosmiC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@200;300;400;500;600;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --bg-light: #0d3a5c;
+            --text-primary: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-gold: #d4af37;
+            --accent-blue: #4a90e2;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.7), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.4;
+            animation: twinkle 8s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 25, 40, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 200px;
+            height: 47px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-desktop { 
+            opacity: 1;
+            z-index: 2;
+        }
+        .logo-mobile { 
+            opacity: 0;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 47px;
+                height: 47px;
+            }
+            
+            .logo-desktop { 
+                opacity: 0;
+            }
+            .logo-mobile { 
+                opacity: 1;
+            }
+        }
+
+        .back-btn {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            transition: all 0.3s;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Article Header - STICKY como os outros */
+        .article-header {
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+            background: rgba(5, 25, 40, 0.95);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .category-label {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--accent-gold);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            font-weight: 300;
+            font-style: italic;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Vital Stats - COMPACTO */
+        .vital-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0 0;
+            padding: 15px;
+            background: rgba(8, 38, 60, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px 5px;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            line-height: 1.4;
+        }
+
+        .stat-value.highlight {
+            color: var(--accent-gold);
+        }
+
+        /* Hero Image */
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            object-position: center top;
+            border-radius: 12px;
+            margin: 25px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Article Content */
+        .article-content {
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .article-content p {
+            margin-bottom: 22px;
+            text-align: justify;
+        }
+
+        .lead {
+            font-size: 19px;
+            line-height: 1.7;
+            color: white;
+            font-weight: 400;
+            border-left: 3px solid var(--accent-gold);
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+        }
+
+        /* Section Dividers */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            margin: 40px 0 30px;
+            gap: 15px;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-gold);
+            white-space: nowrap;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-gold), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 20px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 5px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .timeline-year {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            color: var(--accent-gold);
+            margin-bottom: 8px;
+        }
+
+        .timeline-content {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* Books Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .book-card {
+            background: rgba(8, 38, 60, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 18px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent-gold), transparent);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .book-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .book-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .book-year {
+            font-size: 10px;
+            color: var(--accent-gold);
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .book-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .book-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: linear-gradient(135deg, rgba(8, 38, 60, 0.8), rgba(13, 58, 92, 0.4));
+            border-left: 3px solid var(--accent-gold);
+            padding: 25px;
+            margin: 35px 0;
+            border-radius: 0 12px 12px 0;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 60px;
+            color: rgba(212, 175, 55, 0.15);
+            font-family: 'Cinzel', serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 20px;
+            font-style: italic;
+            line-height: 1.5;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+        }
+
+        /* Legacy Section */
+        .legacy-box {
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .legacy-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .legacy-title {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            color: var(--accent-gold);
+            margin-bottom: 15px;
+        }
+
+        .legacy-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.9);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Footer */
+        .article-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background: rgba(8, 38, 60, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            max-width: 250px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(8, 38, 60, 0.8);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateX(5px);
+        }
+
+        .nav-btn.prev:hover {
+            transform: translateX(-5px);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        .nav-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #020d14, transparent);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-header {
+                position: relative;
+                top: 0;
+                margin-bottom: 20px;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .vital-stats {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+            
+            .hero-image {
+                height: 250px;
+            }
+            
+            .article-content {
+                font-size: 16px;
+            }
+            
+            .quote-block {
+                padding: 20px;
+            }
+            
+            .quote-text {
+                font-size: 18px;
+            }
+            
+            .article-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-btn {
+                max-width: 100%;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="stars"></div>
+
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../Images/Logo-StarCosmiC.png" alt="StarCosmiC" class="logo-desktop">
+                    <img src="../Images/LogoMobile.png" alt="StarCosmiC" class="logo-mobile">
+                </div>
+            </a>
+            <a href="../index.html" class="back-btn">
+                ← Voltar
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <!-- Article Header agora sticky -->
+            <div class="bio-sticky">
+                <header class="article-header">
+                    <span class="category-label">Biografia</span>
+                    <h1>Galileu Galilei</h1>
+                    <p class="subtitle">"O pai da ciência moderna e da astronomia observacional"</p>
+                    
+                    <div class="vital-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Nascimento</div>
+                            <div class="stat-value">15 Fev 1564<br><span style="font-size: 11px; opacity: 0.7;">Pisa, Itália</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Falecimento</div>
+                            <div class="stat-value highlight">8 Jan 1642<br><span style="font-size: 11px; opacity: 0.7;">Arcetri, Itália</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Legado</div>
+                            <div class="stat-value">Pioneiro da<br><span style="font-size: 11px; opacity: 0.7;">Astronomia Moderna</span></div>
+                        </div>
+                    </div>
+                </header>
+            </div>
+            
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Justus_Sustermans_-_Portrait_of_Galileo_Galilei%2C_1636.jpg" alt="Galileu Galilei" class="hero-image">
+
+            <div class="article-content">
+                <p class="lead">
+                    Galileu Galilei foi um astrônomo, físico e engenheiro italiano, amplamente reconhecido como o pai da ciência moderna. Suas observações telescópicas revolucionárias e seu método científico rigoroso desafiaram a visão geocêntrica do universo, estabelecendo as bases para a astronomia observacional e a física moderna.
+                </p>
+
+                <p>
+                    Nascido em Pisa em 1564, Galileu foi o primogênito de Vincenzo Galilei, um músico e teórico musical, e Giulia Ammannati. Sua família mudou-se para Florença em 1574, onde o jovem Galileu iniciou seus estudos clássicos. Posteriormente, matriculou-se na Universidade de Pisa para estudar medicina, mas seu interesse pela matemática e física logo o levou a abandonar a medicina em favor das ciências naturais.
+                </p>
+
+                <p>
+                    Aos 21 anos, já demonstrava talento excepcional para a matemática. Sua habilidade em construir instrumentos científicos e sua curiosidade insaciável o levariam a fazer descobertas que mudariam para sempre nossa compreensão do cosmos. Foi o primeiro a usar o telescópio para observações astronômicas sistemáticas, revolucionando a astronomia e desafiando as doutrinas da Igreja Católica.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Revolução Telescópica</span>
+                </div>
+
+                <h2>O Telescópio que Mudou o Mundo</h2>
+
+                <p>
+                    Em 1609, Galileu soube de um instrumento óptico recém-inventado nos Países Baixos. Sem nunca ter visto um telescópio, ele construiu seu próprio aparelho com uma ampliação de 3x, rapidamente aprimorando-o para 8x e depois 33x. Com este instrumento, apontou para o céu e fez descobertas que chocaram o mundo.
+                </p>
+
+                <p>
+                    Em janeiro de 1610, observou pela primeira vez as quatro maiores luas de Júpiter — hoje chamadas de luas galileanas: Io, Europa, Ganimedes e Calisto. Esta descoberta foi crucial porque provava que nem todos os corpos celestes orbitavam a Terra, desafiando diretamente o geocentrismo aristotélico.
+                </p>
+
+                <p>
+                    No mesmo ano, observou que Vênus apresentava fases, assim como a Lua, o que só era possível se o planeta orbitasse o Sol. Também descobriu que a Lua tinha montanhas e crateras, contradizendo a crença de que os corpos celestes eram perfeitos e lisos. Observou manchas solares e as fases de Saturno, embora seus telescópios não fossem potentes o suficiente para distinguir os anéis.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Carreira e Conflitos</span>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1589</div>
+                        <div class="timeline-content">
+                            Nomeado catedrático de matemática na Universidade de Pisa. Realizou experimentos sobre o movimento dos corpos, desafiando as teorias de Aristóteles sobre queda livre.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1592</div>
+                        <div class="timeline-content">
+                            Transferiu-se para a Universidade de Pádua, onde lecionou por 18 anos. Foi seu período mais produtivo, desenvolvendo estudos sobre mecânica e movimento.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1610</div>
+                        <div class="timeline-content">
+                            Publicou <strong>"Sidereus Nuncius"</strong> (O Mensageiro das Estrelas), relatando suas descobertas telescópicas. Tornou-se matemático e filósofo da corte do Grão-Duque da Toscana, Cosme II de Médici.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1616</div>
+                        <div class="timeline-content">
+                            A Inquisição Romana declarou o heliocentrismo "formalmente herético". Galileu foi instruído a não defender ou ensinar a teoria de Copérnico. Manteve-se relativamente em silêncio por sete anos.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1632</div>
+                        <div class="timeline-content">
+                            Publicou <strong>"Diálogo sobre os Dois Principais Sistemas do Mundo"</strong>, comparando os sistemas geocêntrico e heliocêntrico. O livro foi interpretado como uma defesa do heliocentrismo e uma sátira ao Papa Urbano VIII.
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1633</div>
+                        <div class="timeline-content">
+                            Julgado pela Inquisição, foi forçado a abjurar (renunciar publicamente) suas crenças heliocêntricas. Condenado à prisão domiciliar perpétua. Lenda diz que murmurou <em>"Eppur si muove"</em> (E no entanto se move).
+                        </div>
+                    </div>
+                    <div class="timeline-item fade-up">
+                        <div class="timeline-year">1638</div>
+                        <div class="timeline-content">
+                            Cego e sob prisão domiciliar, publicou <strong>"Discorsi e dimostrazioni matematiche"</strong>, sua obra-prima sobre a cinemática e a resistência dos materiais, fundamentando a física moderna.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-divider">
+                    <span class="section-title">Contribuições Científicas</span>
+                </div>
+
+                <h2>O Legado do Método Experimental</h2>
+
+                <p>
+                    Galileu revolucionou a ciência ao insistir que as leis da natureza devem ser descobertas através da observação sistemática e do experimento matemático, não apenas pela lógica aristotélica. Esta abordagem empírica tornou-se a base do método científico moderno.
+                </p>
+
+                <p>
+                    Seus estudos sobre o movimento dos corpos em queda livre estabeleceram que todos os objetos caem com a mesma aceleração, independentemente de sua massa — desde que a resistência do ar seja desprezível. A lenda da Torre de Pisa, embora provavelmente apócrifa, simboliza sua desconfiança em relação à autoridade e sua fé na experimentação.
+                </p>
+
+                <p>
+                    Desenvolveu o conceito de inércia, mais tarde refinado por Newton como sua primeira lei do movimento. Também formulou a lei do pêndulo, fundamental para o desenvolvimento de relógios precisos. Suas descobertas sobre a trajetória parabólica de projéteis estabeleceram as bases da balística moderna.
+                </p>
+
+                <p>
+                    Na astronomia, suas observações telescópicas forneceram evidências empíricas cruciais para o heliocentrismo copernicano. A descoberta das luas de Júpiter mostrou que havia centros de movimento além da Terra. As fases de Vênus provaram que o planeta orbitava o Sol. As montanhas lunares demonstraram que os corpos celestes não eram perfeitos e etéreos.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Obras Principais</span>
+                </div>
+
+                <div class="books-grid">
+                    <div class="book-card fade-up">
+                        <div class="book-year">1610</div>
+                        <div class="book-title">Sidereus Nuncius</div>
+                        <div class="book-desc">O Mensageiro das Estrelas. Primeiro relato das observações telescópicas e descoberta das luas de Júpiter.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">1613</div>
+                        <div class="book-title">História e Demonstrações sobre as Manchas Solares</div>
+                        <div class="book-desc">Estudo detalhado das manchas solares e rotação do Sol, com argumentos a favor do heliocentrismo.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">1623</div>
+                        <div class="book-title">O Assagidor</div>
+                        <div class="book-desc">Defesa do método científico e ataque às teorias aristotélicas sobre cometas e matéria celeste.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">1632</div>
+                        <div class="book-title">Diálogo sobre os Dois Principais Sistemas do Mundo</div>
+                        <div class="book-desc">Comparação entre os sistemas geocêntrico e heliocêntrico. Obra que levou à sua condenação.</div>
+                    </div>
+                    <div class="book-card fade-up">
+                        <div class="book-year">1638</div>
+                        <div class="book-title">Discursos sobre Duas Novas Ciências</div>
+                        <div class="book-desc">Fundamentos da cinemática e resistência dos materiais. Considerada sua obra-prima científica.</div>
+                    </div>
+                </div>
+
+                <div class="quote-block fade-up">
+                    <p class="quote-text">
+                        A matemática é a linguagem na qual Deus escreveu o universo. Não podemos ler a filosofia da natureza sem entender a língua e os caracteres em que está escrita.
+                    </p>
+                    <div class="quote-author">— Galileu Galilei, "O Assagidor" (1623)</div>
+                </div>
+
+                <div class="section-divider">
+                    <span class="section-title">Conflito com a Igreja</span>
+                </div>
+
+                <h2>A Ciência versus o Dogma</h2>
+
+                <p>
+                    O julgamento de Galileu em 1633 representa um dos momentos mais dramáticos da história da ciência. Pressionado pela Inquisição, foi forçado a ajoelhar-se e abjurar suas crenças heliocêntricas sob ameaça de tortura e morte. A sentença incluía a prisão domiciliar perpétua e a proibição de publicar qualquer obra.
+                </p>
+
+                <p>
+                    A lenda de que ele murmurou <em>"Eppur si muove"</em> (E no entanto se move) ao se levantar após a abjuração, embora provavelmente seja apócrifa, simboliza a resistência da verdade científica contra a opressão ideológica. Permaneceu sob prisão domiciliar em sua villa em Arcetri, perto de Florença, até o fim da vida.
+                </p>
+
+                <p>
+                    Apesar das restrições, continuou trabalhando. Cego (provavelmente por catarata e glaucoma causados pela observação solar direta), ditou suas últimas obras para seus alunos. Morreu em 8 de janeiro de 1642, o mesmo ano em que nasceu Isaac Newton, que herdaria e expandiria seu legado científico.
+                </p>
+
+                <p>
+                    Só em 1992, após 13 anos de investigação por uma comissão papal, a Igreja Católica reconheceu formalmente o erro do julgamento de Galileu. O Papa João Paulo II declarou que a teologia não deve interferir em questões científicas empíricas.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Legado Eterno</span>
+                </div>
+
+                <div class="legacy-box fade-up">
+                    <div class="legacy-icon">🔭</div>
+                    <h3 class="legacy-title">O Pai da Ciência Moderna</h3>
+                    <p class="legacy-text">
+                        Galileu estabeleceu o método científico como o caminho para o conhecimento: observação, hipótese, experimentação e análise matemática. Einstein o chamou de "o pai da física moderna — na verdade, de toda a ciência moderna".
+                    </p>
+                    <p class="legacy-text" style="margin-top: 15px;">
+                        A sonda espacial <strong>Galileo</strong>, lançada em 1989 para estudar Júpiter e suas luas, carrega seu nome. O <strong>Galilei number</strong> (razão entre força de inércia e força gravitacional) e a <strong>unidade gal</strong> (aceleração) homenageiam suas contribuições. Suas descobertas abriram o caminho para Newton, Einstein e toda a física moderna.
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <nav class="article-nav">
+            <a href="Newton.html" class="nav-btn prev">
+                <div>
+                    <div class="nav-label">← Anterior</div>
+                    <div class="nav-title">Isaac Newton</div>
+                </div>
+            </a>
+            <a href="StephenHawking.html" class="nav-btn next">
+                <div style="text-align: right;">
+                    <div class="nav-label">Próximo →</div>
+                    <div class="nav-title">Stephen Hawking</div>
+                </div>
+            </a>
+        </nav>
+    </main>
+
+    <footer>
+        <p class="footer-text">StarCosmiC © 2026 - Além do Planeta Terra</p>
+    </footer>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
