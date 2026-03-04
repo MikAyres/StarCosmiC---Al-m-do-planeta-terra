@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria Astronômica - StarCosmiC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@200;300;400;500;600;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --bg-light: #0d3a5c;
+            --text-primary: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-gold: #d4af37;
+            --accent-blue: #4a90e2;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.7), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.4;
+            animation: twinkle 8s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 25, 40, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 200px;
+            height: 47px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-desktop { 
+            opacity: 1;
+            z-index: 2;
+        }
+        .logo-mobile { 
+            opacity: 0;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 47px;
+                height: 47px;
+            }
+            
+            .logo-desktop { 
+                opacity: 0;
+            }
+            .logo-mobile { 
+                opacity: 1;
+            }
+        }
+
+        .back-btn {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            transition: all 0.3s;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .page-label {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--accent-gold);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 36px;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #fff, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+            font-weight: 300;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            background: rgba(8, 38, 60, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            color: var(--text-muted);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: rgba(212, 175, 55, 0.3);
+            color: var(--accent-gold);
+        }
+
+        /* Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        /* Photo Card - Estilo Homepage */
+        .photo-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            text-decoration: none;
+            display: block;
+        }
+
+        .photo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 40%, rgba(5, 25, 40, 0.95) 100%);
+            z-index: 1;
+            transition: all 0.4s;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .photo-card:hover::before {
+            background: linear-gradient(to bottom, transparent 20%, rgba(5, 25, 40, 0.98) 100%);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .photo-card:hover .card-image {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 25px;
+            z-index: 2;
+            transform: translateY(10px);
+            transition: transform 0.3s;
+        }
+
+        .photo-card:hover .card-content {
+            transform: translateY(0);
+        }
+
+        .card-category {
+            display: inline-block;
+            padding: 3px 10px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--accent-gold);
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.5;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .photo-card:hover .card-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card-arrow {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(212, 175, 55, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-primary);
+            font-size: 18px;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s;
+            z-index: 3;
+        }
+
+        .photo-card:hover .card-arrow {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Load More */
+        .load-more {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .load-btn {
+            padding: 15px 40px;
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--accent-gold);
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .load-btn:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: rgba(212, 175, 55, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 50px 0;
+            padding: 30px;
+            background: rgba(8, 38, 60, 0.4);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .stat-number {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            color: var(--accent-gold);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #020d14, transparent);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .featured-card {
+                grid-column: span 1;
+                aspect-ratio: 4/3;
+            }
+            
+            .featured-card .card-title {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .stat-number {
+                font-size: 24px;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="stars"></div>
+
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../Images/Logo-StarCosmiC.png" alt="StarCosmiC" class="logo-desktop">
+                    <img src="../Images/LogoMobile.png" alt="StarCosmiC" class="logo-mobile">
+                </div>
+            </a>
+            <a href="../index.html" class="back-btn">
+                ← Voltar
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <span class="page-label">Galeria</span>
+            <h1>Galeria Astronômica</h1>
+            <p class="page-subtitle">
+                Explore as imagens mais deslumbrantes do universo capturadas pelos maiores telescópios da humanidade
+            </p>
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-btn active">Todas</button>
+            <button class="filter-btn">Nebulosas</button>
+            <button class="filter-btn">Galáxias</button>
+            <button class="filter-btn">Estrelas</button>
+            <button class="filter-btn">Sistema Solar</button>
+            <button class="filter-btn">Telescópio Webb</button>
+        </div>
+
+                <div class="gallery-grid">
+            <!-- SMACS 0723 - NOVO -->
+            <a href="../Conteudo/Smacs.html" class="photo-card fade-up">
+                <img src="../Images/SMACS0723.png" alt="SMACS 0723" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">James Webb</span>
+                    <h2 class="card-title">SMACS 0723</h2>
+                    <p class="card-description">
+                        O rico aglomerado de galáxias capturado em 12,5 horas de exposição. É a visão infravermelha mais profunda já alcançada desta pequena região do universo, mostrando galáxias que existiram há 13 bilhões de anos.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Pilares da Criação - ATUALIZADO -->
+            <a href="pilares-criacao.html" class="photo-card fade-up">
+                <img src="../Images/Pilares.png" alt="Pilares da Criação" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">James Webb</span>
+                    <h2 class="card-title">Pilares da Criação</h2>
+                    <p class="card-description">
+                        O Telescópio Espacial James Webb capturou uma imagem altamente detalhada dos Pilares da Criação, uma estrutura astronômica formada por nuvens de gás e poeira a 6,5 mil anos-luz de distância da Terra.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Anel de Einstein -->
+            <a href="anel-einstein.html" class="photo-card fade-up">
+                <img src="../Images/anel-einstein.jpg" alt="Anel de Einstein" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">Fenômeno</span>
+                    <h2 class="card-title">Anel de Einstein</h2>
+                    <p class="card-description">
+                        Um círculo perfeito de luz formado pela distorção gravitacional de uma galáxia distante.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Galáxia de Andrômeda -->
+            <a href="andromeda.html" class="photo-card fade-up">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/98/Andromeda_Galaxy_%28with_h-alpha%29.jpg" alt="Galáxia de Andrômeda" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">Galáxia</span>
+                    <h2 class="card-title">Galáxia de Andrômeda</h2>
+                    <p class="card-description">
+                        Nossa vizinha cósmica mais próxima, a 2,5 milhões de anos-luz de distância.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Nebulosa do Caranguejo -->
+            <a href="nebulosa-caranguejo.html" class="photo-card fade-up">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Crab_Nebula.jpg" alt="Nebulosa do Caranguejo" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">Nebulosa</span>
+                    <h2 class="card-title">Nebulosa do Caranguejo</h2>
+                    <p class="card-description">
+                        Remanescente de supernova registrada por astrônomos chineses em 1054 d.C.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Buraco Negro M87 -->
+            <a href="buraco-negro-m87.html" class="photo-card fade-up">
+                <img src="../Images/m87.jpg   " alt="Buraco Negro M87" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">Buraco Negro</span>
+                    <h2 class="card-title">Buraco Negro M87*</h2>
+                    <p class="card-description">
+                        Primeira imagem direta de um buraco negro, capturada pelo Event Horizon Telescope.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Nebulosa de Órion -->
+            <a href="nebulosa-orion.html" class="photo-card fade-up">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Orion_Nebula_-_Hubble_2006_mosaic_18000.jpg" alt="Nebulosa de Órion" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">Nebulosa</span>
+                    <h2 class="card-title">Nebulosa de Órion</h2>
+                    <p class="card-description">
+                        Berçário estelar visível a olho nu, a 1.344 anos-luz da Terra.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Galáxia do Sombrero -->
+            <a href="galaxia-sombrero.html" class="photo-card fade-up">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/M104_ngc4594_sombrero_galaxy_hi-res.jpg" alt="Galáxia do Sombrero" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">Galáxia</span>
+                    <h2 class="card-title">Galáxia do Sombrero</h2>
+                    <p class="card-description">
+                        M104, famosa por sua faixa de poeira escura e núcleo brilhante.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Júpiter -->
+            <a href="jupiter-webb.html" class="photo-card fade-up">
+                <img src="../Images/jupiter.jpg" alt="Júpiter" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">Sistema Solar</span>
+                    <h2 class="card-title">Júpiter em Detalhes</h2>
+                    <p class="card-description">
+                        Imagens inéditas do maior planeta do sistema solar pelo James Webb.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Nebulosa da Helix -->
+            <a href="nebulosa-helix.html" class="photo-card fade-up">
+                <img src="../Images/helix.jpg" alt="Nebulosa da Hélix" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">Nebulosa Planetária</span>
+                    <h2 class="card-title">Nebulosa da Hélix</h2>
+                    <p class="card-description">
+                        Conhecida como "Olho de Deus", restos de uma estrela semelhante ao Sol.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Via Láctea -->
+            <a href="via-lactea.html" class="photo-card fade-up">
+                <img src="../Images//VialacteaJames.jpg" alt="Via Láctea" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">Nossa Galáxia</span>
+                    <h2 class="card-title">Centro da Via Láctea</h2>
+                    <p class="card-description">
+                        Vista panorâmica do núcleo galáctico com bilhões de estrelas.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Saturno -->
+            <a href="saturno.html" class="photo-card fade-up">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Saturn_during_Equinox.jpg" alt="Saturno" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">Sistema Solar</span>
+                    <h2 class="card-title">Saturno e seus Anéis</h2>
+                    <p class="card-description">
+                        O senhor dos anéis em toda sua glória durante o equinócio.
+                    </p>
+                </div>
+            </a>
+
+            <!-- Campo Profundo Hubble -->
+            <a href="campo-profundo.html" class="photo-card fade-up">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Hubble_Ultra_Deep_Field_part_d.jpg/600px-Hubble_Ultra_Deep_Field_part_d.jpg" alt="Campo Profundo" class="card-image">
+                <div class="card-arrow">→</div>
+                <div class="card-content">
+                    <span class="card-category">Universo Profundo</span>
+                    <h2 class="card-title">Campo Profundo Hubble</h2>
+                    <p class="card-description">
+                        Milhares de galáxias em uma pequena fração do céu, algumas com 13 bilhões de anos.
+                    </p>
+                </div>
+            </a>
+        </div>
+
+        <div class="load-more fade-up">
+            <button class="load-btn">Carregar Mais</button>
+        </div>
+
+        <div class="stats-section fade-up">
+            <div class="stat-box">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Imagens</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Categorias</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">13.8B</div>
+                <div class="stat-label">Anos de História</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Maravilhas</div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p class="footer-text">StarCosmiC © 2026 - Além do Planeta Terra</p>
+    </footer>
+
+    <script>
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Filter Tabs (visual only for demo)
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.photo-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.preventDefault(); // Impede comportamento padrão
+                const href = this.getAttribute('href');
+                window.location.href = href; // Abre na mesma aba
+            });
+        });
+    </script>
+</body>
+</html>

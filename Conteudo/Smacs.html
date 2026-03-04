@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMACS 0723 - Campo Profundo do James Webb - StarCosmiC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@200;300;400;500;600;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --bg-light: #0d3a5c;
+            --text-primary: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-gold: #d4af37;
+            --accent-cyan: #4a9eff;
+            --accent-orange: #ff6b35;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(212, 175, 55, 0.05) 0%, transparent 40%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.7), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.4;
+            animation: twinkle 8s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 25, 40, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 200px;
+            height: 47px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-desktop { 
+            opacity: 1;
+            z-index: 2;
+        }
+        .logo-mobile { 
+            opacity: 0;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 47px;
+                height: 47px;
+            }
+            
+            .logo-desktop { 
+                opacity: 0;
+            }
+            .logo-mobile { 
+                opacity: 1;
+            }
+        }
+
+        .back-btn {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            transition: all 0.3s;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Article Header - STICKY */
+        .article-header {
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+            background: rgba(5, 25, 40, 0.95);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .category-label {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(74, 158, 255, 0.1);
+            border: 1px solid rgba(74, 158, 255, 0.3);
+            color: var(--accent-cyan);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 300;
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Vital Stats */
+        .vital-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0 0;
+            padding: 15px;
+            background: rgba(8, 38, 60, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px 5px;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            line-height: 1.4;
+        }
+
+        .stat-value.highlight {
+            color: var(--accent-cyan);
+        }
+
+        /* Hero Image */
+        .hero-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 12px;
+            margin: 25px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: -15px;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        /* Article Content */
+        .article-content {
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .article-content p {
+            margin-bottom: 22px;
+            text-align: justify;
+        }
+
+        .lead {
+            font-size: 19px;
+            line-height: 1.7;
+            color: white;
+            font-weight: 400;
+            border-left: 3px solid var(--accent-cyan);
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+        }
+
+        /* Section Dividers */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            margin: 40px 0 30px;
+            gap: 15px;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-cyan);
+            white-space: nowrap;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: white;
+            margin: 40px 0 20px;
+            font-weight: 400;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: var(--accent-cyan);
+            margin: 30px 0 15px;
+            font-weight: 600;
+        }
+
+        /* Data Highlight */
+        .data-highlight {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .data-item {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .data-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .data-value {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            color: var(--accent-cyan);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .data-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(74, 158, 255, 0.05);
+            border: 1px solid rgba(74, 158, 255, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .info-title {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: linear-gradient(135deg, rgba(8, 38, 60, 0.8), rgba(13, 58, 92, 0.4));
+            border-left: 3px solid var(--accent-cyan);
+            padding: 25px;
+            margin: 35px 0;
+            border-radius: 0 12px 12px 0;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 60px;
+            color: rgba(74, 158, 255, 0.15);
+            font-family: 'Cinzel', serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 20px;
+            font-style: italic;
+            line-height: 1.5;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--accent-cyan);
+            letter-spacing: 2px;
+        }
+
+        /* Legacy Box */
+        .legacy-box {
+            background: rgba(74, 158, 255, 0.05);
+            border: 1px solid rgba(74, 158, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .legacy-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .legacy-title {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+        }
+
+        .legacy-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.9);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Footer */
+        .article-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background: rgba(8, 38, 60, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            max-width: 250px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(8, 38, 60, 0.8);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateX(5px);
+        }
+
+        .nav-btn.prev:hover {
+            transform: translateX(-5px);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        .nav-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #020d14, transparent);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-header {
+                position: relative;
+                top: 0;
+                margin-bottom: 20px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .hero-image {
+                height: 250px;
+            }
+
+            .data-highlight {
+                grid-template-columns: 1fr;
+            }
+
+            .vital-stats {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .article-content {
+                font-size: 16px;
+            }
+
+            .article-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-btn {
+                max-width: 100%;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="stars"></div>
+
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../Images/Logo-StarCosmiC.png" alt="StarCosmiC" class="logo-desktop">
+                    <img src="../Images/LogoMobile.png" alt="StarCosmiC" class="logo-mobile">
+                </div>
+            </a>
+            <a href="#" class="back-btn" onclick="history.back(); return false;">
+                ← Voltar
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <div class="bio-sticky">
+                <header class="article-header">
+                    <span class="category-label">Foto Astronômica</span>
+                    <h1>SMACS 0723 — Campo Profundo do James Webb</h1>
+                    <p class="subtitle">"A visão mais profunda do universo já capturada em infravermelho"</p>
+                    
+                    <div class="vital-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Data</div>
+                            <div class="stat-value">11 Jul 2022<br><span style="font-size: 11px; opacity: 0.7;">Lançamento JWST</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Distância</div>
+                            <div class="stat-value highlight">4,6 Bilhões<br><span style="font-size: 11px; opacity: 0.7;">Anos-luz</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Exposição</div>
+                            <div class="stat-value">12,5 Horas<br><span style="font-size: 11px; opacity: 0.7;">Integração</span></div>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+            <img src="../Images/SMACS0723.png" alt="SMACS 0723 - Campo Profundo do James Webb" class="hero-image">
+            
+            <p class="image-caption">
+                O aglomerado de galáxias SMACS 0723 distorce a luz de galáxias muito mais distantes através de lentes gravitacionais, revelando estruturas cósmicas há 13,1 bilhões de anos. Crédito: NASA, ESA, CSA e STScI
+            </p>
+
+            <div class="article-content">
+                <p class="lead">
+                    Esta imagem histórica representa o primeiro campo profundo do Telescópio Espacial James Webb e a visão infravermelha mais profunda e nítida do universo distante já obtida. Lançada em 11 de julho de 2022, ela revolucionou nossa compreensão das primeiras galáxias formadas após o Big Bang.
+                </p>
+
+                <p>
+                    O SMACS 0723 é um aglomerado de galáxias massivo localizado a aproximadamente 4,6 bilhões de anos-luz da Terra, na constelação de Volans (Peixe Voador). Sua imensa gravidade atua como uma lente gravitacional natural, amplificando e distorcendo a luz de galáxias muito mais distantes situadas atrás dele — algumas das quais existiam apenas 300 milhões de anos após o Big Bang.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">A Revolução do Infravermelho</span>
+                </div>
+
+                <h2>Como o James Webb Capturou Esta Imagem</h2>
+
+                <p>
+                    Ao contrário do telescópio Hubble, que opera principalmente em luz visível e ultravioleta, o James Webb foi projetado especificamente para observar no espectro infravermelho. Esta capacidade é crucial porque a luz das galáxias mais antigas e distantes, devido à expansão do universo, sofre desvio para o vermelho (redshift), deslocando-se para comprimentos de onda infravermelhos.
+                </p>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span class="data-value">13,1</span>
+                        <span class="data-label">Bilhões de anos — idade das galáxias mais distantes visíveis</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-value">4,6</span>
+                        <span class="data-label">Bilhões de anos-luz — distância do aglomerado SMACS 0723</span>
+                    </div>
+                    <div class="data-item full-width">
+                        <span class="data-value">∞</span>
+                        <span class="data-label">Galáxias distorcidas pela lente gravitacional do aglomerado</span>
+                    </div>
+                </div>
+
+                <h3>A Técnica da Lente Gravitacional</h3>
+
+                <p>
+                    A presença de matéria massiva curva o tecido do espaço-tempo, conforme previsto pela relatividade geral de Einstein. Quando a luz de galáxias distantes passa próximo a um aglomerado massoso como o SMACS 0723, seu caminho é curvado e amplificado, funcionando como uma lente cósmica natural. Este efeito permite que vejamos galáxias que de outra forma seriam muito fracas para serem detectadas.
+                </p>
+
+                <p>
+                    Na imagem, as galáxias do aglomerado SMACS 0723 aparecem como objetos brilhantes no centro, com características amareladas e laranjadas. Ao redor delas, vemos arcos curvos e distorcidos — estas são galáxias muito mais distantes, cujas imagens foram ampliadas e esticadas pela gravidade do aglomerado.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Descobertas Revolucionárias</span>
+                </div>
+
+                <h2>O Que Esta Imagem Revelou</h2>
+
+                <div class="info-box">
+                    <div class="info-title">🔍 Galáxias Inesperadamente Maduras</div>
+                    <div class="info-text">
+                        O James Webb revelou galáxias que existiam apenas 300-500 milhões de anos após o Big Bang, mas que já possuíam estruturas surpreendentemente complexas — discos espirais, aglomerados de estrelas e elementos químicos pesados. Isto desafiou as teorias existentes sobre a formação galáctica, sugerindo que as galáxias evoluíram muito mais rapidamente do que se pensava.
+                    </div>
+                </div>
+
+                <p>
+                    Antes do James Webb, acreditava-se que as primeiras galáxias fossem pequenas, irregulares e pouco estruturadas. A imagem do SMACS 0723 mostrou o oposto: galáxias massivas, bem formadas e quase tão brilhantes quanto nossa própria Via Láctea, existindo quando o universo tinha apenas 2% de sua idade atual.
+                </p>
+
+                <p>
+                    Outra descoberta surpreendente foi a abundância de galáxias brilhantes em infravermelho. Modelos anteriores previam que deveríamos ver apenas algumas poucas galáxias nessas épocas remotas, mas o James Webb revelou centenas, forçando uma revisão de nossos modelos de formação estelar e evolução galáctica.
+                </p>
+
+                <div class="quote-block">
+                    <p class="quote-text">
+                        Esta imagem não é apenas uma fotografia do passado distante — é um vislumbre de como o universo se parecia quando a luz que vemos partiu de suas fontes, bilhões de anos antes de nosso próprio Sol nascer.
+                    </p>
+                    <div class="quote-author">— NASA, Comunicado de Imprensa JWST (2022)</div>
+                </div>
+
+                <div class="section-divider">
+                    <span class="section-title">Detalhes Técnicos</span>
+                </div>
+
+                <h2>A Engenharia por Trás da Imagem</h2>
+
+                <p>
+                    A imagem do SMACS 0723 foi composta a partir de múltiplas exposições tiradas pelos dois instrumentos principais do James Webb: a NIRCam (Câmera de Infravermelho Próximo) e a NIRSpec (Espectrógrafo de Infravermelho Próximo). O tempo total de exposição foi de aproximadamente 12,5 horas, distribuído em vários dias de observação.
+                </p>
+
+                <p>
+                    A NIRCam detectou luz em seis diferentes filtros de infravermelho próximo (0,6 a 5,0 micrômetros), permitindo que astrônomos analisassem as cores e composições das galáxias. Diferentes comprimentos de onda revelam diferentes características: o azul e o verde mostram estrelas jovens e quentes, enquanto o vermelho e o laranja indicam poeira e estrelas mais antigas.
+                </p>
+
+                <p>
+                    A resolução angular do James Webb é tão alta que, se fosse apontado para um grão de areia a um metro de distância, poderia detectar o calor infravermelho emitido por aquele único grão. Esta precisão permitiu identificar estruturas em galáxias que estão a mais de 13 bilhões de anos-luz de distância.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Significado Histórico</span>
+                </div>
+
+                <div class="legacy-box">
+                    <div class="legacy-icon">🔭</div>
+                    <h3 class="legacy-title">Uma Nova Era da Astronomia</h3>
+                    <p class="legacy-text">
+                        A imagem do SMACS 0723 marcou o início de uma nova era na exploração do universo. Pela primeira vez, pudemos ver diretamente como eram as primeiras galáxias, testemunhar a formação das primeiras estrelas e estudar a evolução química do cosmos primordial. Esta visão não apenas responde perguntas — ela levanta novas questões sobre a natureza da matéria escura, a formação de buracos negros supermassivos e a possibilidade de vida em mundos distantes.
+                    </p>
+                    <p class="legacy-text" style="margin-top: 15px;">
+                        Como disse o administrador da NASA, Bill Nelson: <em>"Estamos vendo luz de galáxias que existiam há mais de 13 bilhões de anos. Esta é a visão mais profunda de nosso universo que já foi obtida."</em>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <nav class="article-nav">
+            <a href="Pilares.html" class="nav-btn prev">
+                <div>
+                    <div class="nav-label">← Anterior</div>
+                    <div class="nav-title">Pilares da Criação</div>
+                </div>
+            </a>
+            <a href="#" class="nav-btn next">
+                <div style="text-align: right;">
+                    <div class="nav-label">Próximo →</div>
+                    <div class="nav-title">Próxima Foto</div>
+                </div>
+            </a>
+        </nav>
+    </main>
+
+    <footer>
+        <p class="footer-text">StarCosmiC © 2026 - Além do Planeta Terra</p>
+    </footer>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
