@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pilares da Criação - StarCosmiC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@200;300;400;500;600;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #051928;
+            --bg-card: #08263C;
+            --bg-light: #0d3a5c;
+            --text-primary: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --accent-gold: #d4af37;
+            --accent-orange: #ff6b35;
+            --accent-red: #e74c3c;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .cosmic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at top, rgba(255, 107, 53, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(231, 76, 60, 0.05) 0%, transparent 40%);
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.7), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            opacity: 0.4;
+            animation: twinkle 8s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 25, 40, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 12px 0;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .logo-icon {
+            width: 200px;
+            height: 47px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .logo-desktop { 
+            opacity: 1;
+            z-index: 2;
+        }
+        .logo-mobile { 
+            opacity: 0;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .logo-icon {
+                width: 47px;
+                height: 47px;
+            }
+            
+            .logo-desktop { 
+                opacity: 0;
+            }
+            .logo-mobile { 
+                opacity: 1;
+            }
+        }
+
+        .back-btn {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            transition: all 0.3s;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .back-btn:hover {
+            color: white;
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Article Header - STICKY */
+        .article-header {
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+            background: rgba(5, 25, 40, 0.95);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .category-label {
+            display: inline-block;
+            padding: 4px 14px;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            color: var(--accent-orange);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--accent-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 300;
+            font-style: italic;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Vital Stats */
+        .vital-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px 0 0;
+            padding: 15px;
+            background: rgba(8, 38, 60, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px 5px;
+        }
+
+        .stat-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+            line-height: 1.4;
+        }
+
+        .stat-value.highlight {
+            color: var(--accent-orange);
+        }
+
+        /* Hero Image */
+        .hero-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 12px;
+            margin: 25px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: -15px;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        /* Article Content */
+        .article-content {
+            font-family: 'Crimson Text', serif;
+            font-size: 18px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+        }
+
+        .article-content p {
+            margin-bottom: 22px;
+            text-align: justify;
+        }
+
+        .lead {
+            font-size: 19px;
+            line-height: 1.7;
+            color: white;
+            font-weight: 400;
+            border-left: 3px solid var(--accent-orange);
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+        }
+
+        /* Section Dividers */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            margin: 40px 0 30px;
+            gap: 15px;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent-orange);
+            white-space: nowrap;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: white;
+            margin: 40px 0 20px;
+            font-weight: 400;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: var(--accent-orange);
+            margin: 30px 0 15px;
+            font-weight: 600;
+        }
+
+        /* Data Highlight */
+        .data-highlight {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .data-item {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .data-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .data-value {
+            font-family: 'Cinzel', serif;
+            font-size: 28px;
+            color: var(--accent-orange);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .data-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: rgba(255, 107, 53, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .info-title {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            color: var(--accent-orange);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* Quote Block */
+        .quote-block {
+            background: linear-gradient(135deg, rgba(8, 38, 60, 0.8), rgba(13, 58, 92, 0.4));
+            border-left: 3px solid var(--accent-orange);
+            padding: 25px;
+            margin: 35px 0;
+            border-radius: 0 12px 12px 0;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 60px;
+            color: rgba(255, 107, 53, 0.15);
+            font-family: 'Cinzel', serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 20px;
+            font-style: italic;
+            line-height: 1.5;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--accent-orange);
+            letter-spacing: 2px;
+        }
+
+        /* Legacy Box */
+        .legacy-box {
+            background: rgba(255, 107, 53, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .legacy-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .legacy-title {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            color: var(--accent-orange);
+            margin-bottom: 15px;
+        }
+
+        .legacy-text {
+            font-size: 16px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.9);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Footer */
+        .article-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            background: rgba(8, 38, 60, 0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            max-width: 250px;
+        }
+
+        .nav-btn:hover {
+            background: rgba(8, 38, 60, 0.8);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateX(5px);
+        }
+
+        .nav-btn.prev:hover {
+            transform: translateX(-5px);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+
+        .nav-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(to top, #020d14, transparent);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .article-header {
+                position: relative;
+                top: 0;
+                margin-bottom: 20px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .hero-image {
+                height: 250px;
+            }
+
+            .data-highlight {
+                grid-template-columns: 1fr;
+            }
+
+            .vital-stats {
+                grid-template-columns: 1fr;
+                gap: 5px;
+            }
+
+            .article-content {
+                font-size: 16px;
+            }
+
+            .article-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-btn {
+                max-width: 100%;
+            }
+        }
+
+        /* Scroll Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="cosmic-bg"></div>
+    <div class="stars"></div>
+
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="../Images/Logo-StarCosmiC.png" alt="StarCosmiC" class="logo-desktop">
+                    <img src="../Images/LogoMobile.png" alt="StarCosmiC" class="logo-mobile">
+                </div>
+            </a>
+            <a href="#" class="back-btn" onclick="history.back(); return false;">
+                ← Voltar
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <article>
+            <div class="bio-sticky">
+                <header class="article-header">
+                    <span class="category-label">Foto Astronômica</span>
+                    <h1>Pilares da Criação</h1>
+                    <p class="subtitle">"O berçário estelar mais icônico do universo"</p>
+                    
+                    <div class="vital-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">Localização</div>
+                            <div class="stat-value">Nebulosa da Águia<br><span style="font-size: 11px; opacity: 0.7;">Constelação Serpentário</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Distância</div>
+                            <div class="stat-value highlight">6.500<br><span style="font-size: 11px; opacity: 0.7;">Anos-luz</span></div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Descoberta</div>
+                            <div class="stat-value">1995<br><span style="font-size: 11px; opacity: 0.7;">Hubble Original</span></div>
+                        </div>
+                    </div>
+                </header>
+            </div>
+
+            <img src="../Images/Pilares.png" alt="Pilares da Criação - James Webb" class="hero-image">
+            
+            <p class="image-caption">
+                Os Pilares da Criação, capturados pelo Telescópio Espacial James Webb em infravermelho próximo, revelam novas estrelas recém-nascidas e jatos de gás emanando das colunas de poeira cósmica. Crédito: NASA, ESA, CSA, STScI
+            </p>
+
+            <div class="article-content">
+                <p class="lead">
+                    Os Pilares da Criação são uma das formações cósmicas mais emblemáticas já fotografadas. Estas colunas monumentais de gás molecular e poeira interestelar, localizadas na Nebulosa da Águia, servem como berçário para novas estrelas, testemunhando o nascimento de mundos em escala cósmica.
+                </p>
+
+                <p>
+                    Originalmente imortalizados pelo Telescópio Espacial Hubble em 1995, os Pilares tornaram-se um ícone da astronomia popular. Quase três décadas depois, o Telescópio Espacial James Webb revelou esta região com detalhes sem precedentes, olhando através da poeira densa para expor estrelas recém-nascidas escondidas e processos dinâmicos invisíveis em luz visível.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">A Estrutura Cósmica</span>
+                </div>
+
+                <h2>O Que São os Pilares</h2>
+
+                <p>
+                    Os Pilares da Criação são na verdade três colunas principais de gás molecular frio e poeira, alongadas como dedos cósmicos apontando para o espaço. A coluna mais esquerda tem aproximadamente quatro anos-luz de comprimento — cerca de 37 trilhões de quilômetros. Para colocar em perspectiva, se nosso Sistema Solar (até Netuno) fosse colocado na base da coluna, ele ocuparia menos de 0,1% de sua altura.
+                </p>
+
+                <div class="data-highlight">
+                    <div class="data-item">
+                        <span class="data-value">4</span>
+                        <span class="data-label">Anos-luz — altura da coluna esquerda</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-value">6.500</span>
+                        <span class="data-label">Anos-luz — distância da Terra</span>
+                    </div>
+                    <div class="data-item full-width">
+                        <span class="data-value">~5 Milhões</span>
+                        <span class="data-label">Anos — idade estimada dos Pilares</span>
+                    </div>
+                </div>
+
+                <h3>Composição e Formação</h3>
+
+                <p>
+                    Os Pilares são compostos principalmente de hidrogênio molecular frio, junto com poeira interestelar e traços de outros elementos. A cor característica avermelhada/laranjada vista nas imagens do James Webb vem do hidrogênio ionizado e da poeira aquecida. As pontas das colunas estão sendo lentamente erodidas pela intensa radiação ultravioleta de estrelas massivas próximas, ainda fora do campo de visão da imagem.
+                </p>
+
+                <p>
+                    Este processo de erosão fotoevaporativa é um exemplo de "destruição criativa" no universo: enquanto a radiação destrói as colunas externas, comprime o gás interno, desencadeando o colapso gravitacional que forma novas estrelas. É um ciclo de nascimento e morte em escala cósmica.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Revelações do James Webb</span>
+                </div>
+
+                <h2>O Que o Webb Nos Mostrou</h2>
+
+                <div class="info-box">
+                    <div class="info-title">🔴 Visão em Infravermelho</div>
+                    <div class="info-text">
+                        O James Webb observa em comprimentos de onda infravermelhos, que podem penetrar as nuvens densas de poeira que bloqueiam a luz visível. Enquanto o Hubble via apenas as silhuetas escuras das colunas contra o brilho de fundo, o Webb revela o interior, mostrando estrelas recém-nascidas, discos protoplanetários e jatos de gás sendo ejetados.
+                    </div>
+                </div>
+
+                <p>
+                    A imagem de 2022 do James Webb revelou dezenas de fontes de luz vermelha brilhante ao longo das bordas das colunas. Estas são estrelas recém-formadas, com idades estimadas entre apenas 100.000 e 1 milhão de anos — bebês em termos estelares. Muitas ainda estão envoltas em discos de material circumstelar, os precursores de sistemas planetários.
+                </p>
+
+                <p>
+                    Especialmente notáveis são os jatos e choques bow-shock visíveis como ondulações vermelhas nas bordas das colunas. Estes são causados por jatos de gás superaquecido sendo ejetados polos das estrelas jovens, colidindo com o material circundante a velocidades de centenas de quilômetros por segundo.
+                </p>
+
+                <div class="quote-block">
+                    <p class="quote-text">
+                        Os Pilares da Criação são uma região onde vemos o ciclo completo de formação estelar em ação. Estamos testemunhando o nascimento de estrelas em tempo real, algo que era impossível antes do James Webb.
+                    </p>
+                    <div class="quote-author">— Dr. Klaus Pontoppidan, Cientista do Projeto JWST</div>
+                </div>
+
+                <div class="section-divider">
+                    <span class="section-title">O Futuro dos Pilares</span>
+                </div>
+
+                <h2>Uma Despedida Cósmica</h2>
+
+                <p>
+                    Embora majestosos, os Pilares da Criação são temporários no escala cósmica. Astrônomos acreditam que uma onda de choque de uma supernova próxima já tenha destruído os Pilares há cerca de 6.000 anos — mas como estão a 6.500 anos-luz de distância, a luz dessa destruição ainda não chegou à Terra. Estamos literalmente vendo um fantasma do passado, uma visão que já não existe mais no presente.
+                </p>
+
+                <p>
+                    Quando essa luz finalmente chegar, dentro de algumas centenas de anos, veremos as colunas sendo dispersas pelo espaço, liberando as estrelas recém-nascidas de seu berçário cósmico. Será um espetáculo celestial, mas também um lembrete da natureza efêmera mesmo das estruturas mais imponentes do universo.
+                </p>
+
+                <div class="section-divider">
+                    <span class="section-title">Legado Cultural</span>
+                </div>
+
+                <div class="legacy-box">
+                    <div class="legacy-icon">⭐</div>
+                    <h3 class="legacy-title">Um Ícone da Astronomia</h3>
+                    <p class="legacy-text">
+                        Desde sua primeira imagem pelo Hubble em 1995, os Pilares da Criação tornaram-se um dos símbolos mais reconhecidos da exploração espacial. Apareceram em selos postais, moedas comemorativas, pôsteres de quartos e até na cultura pop. A imagem do James Webb de 2022 não apenas honra este legado — ele o expande, revelando novas camadas de complexidade e beleza nesta formação cósmica icônica.
+                    </p>
+                    <p class="legacy-text" style="margin-top: 15px;">
+                        Como disse o administrador da NASA, Bill Nelson: <em>"Os Pilares da Criação nos lembram que, mesmo no vazio do espaço, a natureza encontra maneiras de criar, destruir e renascer — um ciclo que se repete desde o início do universo."</em>
+                    </p>
+                </div>
+            </div>
+        </article>
+
+        <nav class="article-nav">
+            <a href="GalaxiaAndromeda.html" class="nav-btn prev">
+                <div>
+                    <div class="nav-label">← Anterior</div>
+                    <div class="nav-title">Galáxia de Andrômeda</div>
+                </div>
+            </a>
+            <a href="Smacs.html" class="nav-btn next">
+                <div style="text-align: right;">
+                    <div class="nav-label">Próximo →</div>
+                    <div class="nav-title">SMACS 0723</div>
+                </div>
+            </a>
+        </nav>
+    </main>
+
+    <footer>
+        <p class="footer-text">StarCosmiC © 2026 - Além do Planeta Terra</p>
+    </footer>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
