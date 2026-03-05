@@ -844,9 +844,3 @@
         display: none !important; /* Sempre escondido no desktop */
     }
 }
-/* Teste - deixa o fundo vermelho em telas pequenas */
-@media screen and (max-width: 768px) {
-    body {
-        background-color: red !important;
-    }
-}
