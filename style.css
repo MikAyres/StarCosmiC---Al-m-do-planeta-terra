@@ -201,6 +201,7 @@
         }
 
         /* Força a cor em todos os estados do link */
+/* ===== ESTILOS DESKTOP (padrão) ===== */
         .login-link,
         .login-link:visited,
         .login-link:hover,
@@ -232,9 +233,14 @@
             border-color: #00ffff;
         }
 
+        .icon-login {
+            width: 32px;
+            height: 32px;
+        }
+
         .login-text {
             font-size: 10px;
-            color: #ffffff !important;  /* Força a cor cyan */
+            color: #00d4ff !important;
             margin-top: 6px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -257,6 +263,31 @@
 
         .user-avatar:hover .login-text::after {
             width: 100%;
+        }
+
+        /* ===== ESTILOS MOBILE ===== */
+        @media screen and (max-width: 768px) {
+            .user-avatar {
+                min-width: 50px;      /* Diminui a largura mínima */
+                padding: 8px 10px;    /* Menos padding */
+                border-radius: 10px;  /* Bordas levemente menores */
+                border-width: 1.5px;  /* Borda mais fina */
+            }
+            
+            .icon-login {
+                width: 24px;          /* Ícone menor */
+                height: 24px;
+            }
+            
+            .login-text {
+                font-size: 8px;       /* Texto menor */
+                margin-top: 4px;      /* Menos espaço entre ícone e texto */
+                letter-spacing: 1px;  /* Menos espaçamento entre letras */
+            }
+            
+            .login-text::after {
+                height: 0.5px;        /* Linha mais fina no mobile */
+            }
         }
 
         /* Main Content */
